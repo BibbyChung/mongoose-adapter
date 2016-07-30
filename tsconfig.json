@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "isolatedModules": true
+    },
+    "exclude": [
+        "node_modules",
+        "typings"
+    ]
+}
