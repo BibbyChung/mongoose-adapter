@@ -25,7 +25,7 @@ export class UnitOfWork implements IUnitOfWork {
 
 		let promiseArr: Promise<void>[] = [];
 
-		this.addArr.forEach(a => {
+		this.addArr.forEach((a: any) => {
 
 			let p = new Promise<void>((resolve, reject) => {
 
@@ -43,7 +43,7 @@ export class UnitOfWork implements IUnitOfWork {
 
 		});
 
-		this.removeArr.forEach(a => {
+		this.removeArr.forEach((a: any) => {
 
 			let p = new Promise<void>((resolve, reject) => {
 
@@ -61,7 +61,7 @@ export class UnitOfWork implements IUnitOfWork {
 
 		});
 
-		this.updateArr.forEach(a => {
+		this.updateArr.forEach((a: any) => {
 
 			let p = new Promise<void>((resolve, reject) => {
 

@@ -8,27 +8,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments)).next());
     });
 };
-var mongoose = require("mongoose");
-var UnitOfWork = (function () {
-    function UnitOfWork() {
+const mongoose = require("mongoose");
+class UnitOfWork {
+    constructor() {
         this.addArr = [];
         this.removeArr = [];
         this.updateArr = [];
     }
-    UnitOfWork.prototype.add = function (entity) {
+    add(entity) {
         this.addArr.push(entity);
-    };
-    UnitOfWork.prototype.remove = function (entity) {
+    }
+    remove(entity) {
         this.removeArr.push(entity);
-    };
-    UnitOfWork.prototype.update = function (entity) {
+    }
+    update(entity) {
         this.updateArr.push(entity);
-    };
-    UnitOfWork.prototype.saveChangeAsync = function () {
-        var promiseArr = [];
-        this.addArr.forEach(function (a) {
-            var p = new Promise(function (resolve, reject) {
-                a.save(function (err) {
+    }
+    saveChangeAsync() {
+        let promiseArr = [];
+        this.addArr.forEach((a) => {
+            let p = new Promise((resolve, reject) => {
+                a.save((err) => {
                     if (err) {
                         reject(err);
                         return;
@@ -38,9 +38,9 @@ var UnitOfWork = (function () {
             });
             promiseArr.push(p);
         });
-        this.removeArr.forEach(function (a) {
-            var p = new Promise(function (resolve, reject) {
-                a.remove(function (err) {
+        this.removeArr.forEach((a) => {
+            let p = new Promise((resolve, reject) => {
+                a.remove((err) => {
                     if (err) {
                         reject(err);
                         return;
@@ -50,9 +50,9 @@ var UnitOfWork = (function () {
             });
             promiseArr.push(p);
         });
-        this.updateArr.forEach(function (a) {
-            var p = new Promise(function (resolve, reject) {
-                a.save(function (err) {
+        this.updateArr.forEach((a) => {
+            let p = new Promise((resolve, reject) => {
+                a.save((err) => {
                     if (err) {
                         reject(err);
                         return;
@@ -62,10 +62,9 @@ var UnitOfWork = (function () {
             });
             promiseArr.push(p);
         });
-        var p = new Promise(function (resolve, reject) __awaiter(this, void 0, void 0, function* () {
+        let p = new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             try {
-                for (var _i = 0, promiseArr_1 = promiseArr; _i < promiseArr_1.length; _i++) {
-                    var item = promiseArr_1[_i];
+                for (let item of promiseArr) {
                     yield item;
                 }
                 resolve();
@@ -75,15 +74,15 @@ var UnitOfWork = (function () {
             }
         }));
         return p;
-    };
-    UnitOfWork.prototype.connectAsync = function (connectionString) {
+    }
+    connectAsync(connectionString) {
         mongoose.Promise = global.Promise;
-        var p = new Promise(function (resolve, reject) {
+        let p = new Promise((resolve, reject) => {
             mongoose.connect(connectionString, {
                 server: {
                     poolSize: 5
                 }
-            }, function (err) {
+            }, (err) => {
                 if (err) {
                     reject(err);
                     return;
@@ -93,10 +92,10 @@ var UnitOfWork = (function () {
             });
         });
         return p;
-    };
-    UnitOfWork.prototype.closeAsync = function () {
-        var p = new Promise(function (resolve, reject) {
-            mongoose.disconnect(function (err) {
+    }
+    closeAsync() {
+        let p = new Promise((resolve, reject) => {
+            mongoose.disconnect((err) => {
                 if (err) {
                     reject(err);
                     return;
@@ -105,8 +104,7 @@ var UnitOfWork = (function () {
             });
         });
         return p;
-    };
-    return UnitOfWork;
-}());
+    }
+}
 exports.UnitOfWork = UnitOfWork;
 //# sourceMappingURL=unitOfWork.js.map

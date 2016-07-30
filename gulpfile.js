@@ -108,7 +108,7 @@ gulp.task('ts_compile_dist', () => {
 });
 
 gulp.task("run_cucumber", shell.task([
-    'cucumber.js --format progress'
+    'cucumber.js test/**/*.feature --format progress'
     //'cucumber.js --format pretty'
 ]));
 
@@ -123,9 +123,9 @@ gulp.task('default', (cb) => {
             "ts_compile_dist",
             "copy_feature_to_test",
         ],
-        // [
-        //     "run_cucumber",
-        // ],
+        [
+            "run_cucumber",
+        ],
         cb
     );
 });
