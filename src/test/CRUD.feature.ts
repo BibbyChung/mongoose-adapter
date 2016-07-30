@@ -10,7 +10,7 @@ let unitOfWork: UnitOfWork;
 let prepareToRun = (_self, tag: string) => {
   _self.Before({ tags: [tag] }, async (scenario: any) => {
 
-    unitOfWork = new UnitOfWork()
+    unitOfWork = new UnitOfWork();
     mydb = new UnitOfWorkInMemory(unitOfWork);
     await mydb.connectAsync();
 
