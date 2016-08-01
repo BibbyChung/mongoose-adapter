@@ -77,7 +77,7 @@ gulp.task('ts_compile_test', () => {
         [
             "./src/**/*.ts",
         ],
-        "tsconfig.json",
+        "tsconfig_test.json",
         "src",
         "./test",
         false
@@ -92,16 +92,27 @@ gulp.task('ts_compile_dist', () => {
 
     let m = merge();
 
-    let dist = tsCompiler(
+    let code = tsCompiler(
         [
             "./src/code/**/*.ts",
         ],
         "tsconfig.json",
         "src/code",
-        "./dist",
+        "./dist/code",
         false
     );
-    m.add(dist);
+    m.add(code);
+
+    let main = tsCompiler(
+        [
+            "./src/main.ts",
+        ],
+        "tsconfig.json",
+        "src",
+        "./dist/",
+        false
+    );
+    m.add(main);
 
     return m;
 

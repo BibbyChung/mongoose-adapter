@@ -1,9 +1,7 @@
 /// <reference path="./../../typings/index.d.ts" />
 
 import * as mongoose from "mongoose";
-
-import {BaseRepository} from "./../code/baseRepository";
-import {IUnitOfWork} from "./../code/IUnitOfWork";
+import {BaseRepository, IUnitOfWork} from "./../main";
 
 export class PeopleRepository extends BaseRepository<IPeople> {
 
