@@ -1,0 +1,24 @@
+/// <reference path="./../../typings/index.d.ts" />
+"use strict";
+const mongoose = require("mongoose");
+const main_1 = require("./../main");
+class PeopleRepository extends main_1.BaseRepository {
+    constructor(unitOfWork) {
+        super(unitOfWork);
+    }
+    getDocumentName() {
+        return "People";
+    }
+    getSchema() {
+        let userSchema = {
+            _id: { type: String, index: { unique: true } },
+            name: { type: String },
+            age: { type: Number },
+            birthday: { type: Date }
+        };
+        let s = new mongoose.Schema(userSchema);
+        return s;
+    }
+}
+exports.PeopleRepository = PeopleRepository;
+//# sourceMappingURL=peopleRepository.js.map
