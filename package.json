@@ -9,6 +9,9 @@
 	"scripts": {
 		"test": "cucumber.js test/**/*.feature --format pretty"
 	},
+	"typescript": {
+		"definition": "./src/main.d.ts"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/BibbyChung/mongoose-adapter.git"

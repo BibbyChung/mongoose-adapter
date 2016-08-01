@@ -57,4 +57,5 @@ var UnitOfWorkInMemory = (function () {
     return UnitOfWorkInMemory;
 }());
 exports.UnitOfWorkInMemory = UnitOfWorkInMemory;
+
 //# sourceMappingURL=unitOfWorkInMemory.js.map

@@ -30,4 +30,5 @@ var BaseRepository = (function () {
     return BaseRepository;
 }());
 exports.BaseRepository = BaseRepository;
+
 //# sourceMappingURL=baseRepository.js.map

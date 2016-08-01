@@ -15,7 +15,7 @@ export abstract class BaseRepository<T extends mongoose.Document> {
 		return new (this.getAll())(null);
 	}
 
-	getAll() {
+	getAll(): mongoose.Model<T> {
 
 		let documentName = this.getDocumentName();
 		let schema = this.getSchema();
