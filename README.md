@@ -2,21 +2,21 @@
 
 Make the mongoose easy to use.
 
-## Install
-
-``` shell
-$ npm install mongoose mockgoose --save
-$ typings install dt~es6-promise dt~mongoose dt~mongoose-promise --global --save
-```
-
-> **Note:** You have to install [typings](https://github.com/typings/typings) in your global environment.
-
 ## Quick Start
 
-### typescript
+### **TypeScript**
+
+Install the components
+
+``` shell
+$ npm install mongoose-adapter mockgoose mongoose --save
+$ typings install dt~es6-promise dt~mongoose dt~mongoose-promise --global --save
+```
+> **Note:** You have to install [typings](https://github.com/typings/typings) in your global environment.
+
+Implement the BaseRepository for your mongoose collections.
 
 ```javascript
-//implement the BaseRepository
 
 import {BaseRepository, IUnitOfWork} from "mongoose-adapter";
 
@@ -52,9 +52,10 @@ export interface IPeople extends mongoose.Document {
 	birthday: Date
 }
 ```
+Examples for CRUD
 
 ```javascript
-//create data
+// ==== create data =====
 
 let unitOfWork = new UnitOfWork();
 let rep = new PeopleRepository(unitOfWork);
@@ -68,10 +69,8 @@ peopleRep.add(entity);
 
 await unitOfWork.saveChangeAsync();
 
-```
 
-```javascript
-//update data
+//==== update data ====
 
 let unitOfWork = new UnitOfWork();
 let rep = new PeopleRepository(unitOfWork);
@@ -87,10 +86,7 @@ rep.update(entity);
 
 await unitOfWork.saveChangeAsync();
 
-```
-
-```javascript
-//delete data
+//==== delete data ====
 let unitOfWork = new UnitOfWork();
 let rep = new PeopleRepository(unitOfWork);
 let data = await rep.getAll()
@@ -102,16 +98,17 @@ for (let item of data) {
 }
 
 await unitOfWork.saveChangeAsync();
-```
 
-```javascript
-//get data
+//==== get data ====
 let unitOfWork = new UnitOfWork();
 let rep = new PeopleRepository(unitOfWork);
 let data = await rep.getAll()
     .find({ _id: "1qaz2wsx" })
     .exec();
+
 ```
 
-### javascript 
+### JavaScript 
 (later..)
+
+## Todo
