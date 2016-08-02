@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/ee02fbfb77c9aef60353106d68375e321e5c3fa4/mongoose-promise/mongoose-promise.d.ts",
+    "raw": "registry:dt/mongoose-promise#4.5.4+20160720003345",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/ee02fbfb77c9aef60353106d68375e321e5c3fa4/mongoose-promise/mongoose-promise.d.ts"
+  }
+}

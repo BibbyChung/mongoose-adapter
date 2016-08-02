@@ -1,6 +1,6 @@
 {
 	"name": "mongoose-adapter",
-	"version": "1.0.0",
+	"version": "1.0.11",
 	"description": "Make the mongoose to use easily.",
 	"main": "./dist/main.js",
 	"directories": {
@@ -9,9 +9,8 @@
 	"scripts": {
 		"test": "cucumber.js test/**/*.feature --format pretty"
 	},
-	"typescript": {
-		"definition": "./src/main.d.ts"
-	},
+	"license": "MIT",
+	"typings": "./typings/index.d.ts",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/BibbyChung/mongoose-adapter.git"
@@ -20,7 +19,6 @@
 		"mongoose"
 	],
 	"author": "Bibby Chung",
-	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/BibbyChung/mongoose-adapter/issues"
 	},

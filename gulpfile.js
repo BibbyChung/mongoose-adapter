@@ -50,10 +50,8 @@ let getCopyFilesPipe = (sourcePatten, targetPath) => {
 
 gulp.task("clean", (cb) => {
 
-    rimraf("./src/**/*.js", () => {
-        rimraf("./test", () => {
-            rimraf("./dist", cb);
-        });
+    rimraf("./test", () => {
+        rimraf("./dist", cb);
     });
 
 });
@@ -135,7 +133,6 @@ gulp.task("create_ts_definitions", shell.task([
 
 gulp.task('default', (cb) => {
     runSequence(
-        "create_ts_definitions",
         "clean",
         [
             "ts_compile_test",

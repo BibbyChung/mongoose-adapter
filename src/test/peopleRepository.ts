@@ -1,7 +1,8 @@
 /// <reference path="./../../typings/index.d.ts" />
 
 import * as mongoose from "mongoose";
-import {BaseRepository, IUnitOfWork} from "./../main";
+import {IUnitOfWork} from "./../code/IUnitOfWork";
+import {BaseRepository} from "./../code/baseRepository";
 
 export class PeopleRepository extends BaseRepository<IPeople> {
 
@@ -13,7 +14,7 @@ export class PeopleRepository extends BaseRepository<IPeople> {
 		return "People";
 	}
 
-	getSchema() {
+	getSchema(): mongoose.Schema {
 
 		let userSchema = {
 			_id: { type: String, index: { unique: true } },

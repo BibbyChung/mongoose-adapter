@@ -1,7 +1,8 @@
 /// <reference path="./../../typings/index.d.ts" />
 
 import * as assert from "assert";
-import {UnitOfWork, UnitOfWorkInMemory} from "./../main";
+import {UnitOfWork} from "./../code/unitOfWork";
+import {UnitOfWorkInMemory} from "./../code/unitOfWorkInMemory";
 import {PeopleRepository, IPeople} from "./peopleRepository";
 
 let mydb: UnitOfWorkInMemory;

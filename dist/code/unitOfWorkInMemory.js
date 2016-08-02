@@ -8,54 +8,51 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments)).next());
     });
 };
-var mongoose = require("mongoose");
-var mockgoose = require("mockgoose");
-var UnitOfWorkInMemory = (function () {
-    function UnitOfWorkInMemory(unitOfWork) {
+const mongoose = require("mongoose");
+let mockgoose = require("mockgoose");
+class UnitOfWorkInMemory {
+    constructor(unitOfWork) {
         this.unitOfWork = unitOfWork;
     }
-    UnitOfWorkInMemory.prototype.add = function (entity) {
+    add(entity) {
         this.unitOfWork.add(entity);
-    };
-    UnitOfWorkInMemory.prototype.remove = function (entity) {
+    }
+    remove(entity) {
         this.unitOfWork.remove(entity);
-    };
-    UnitOfWorkInMemory.prototype.update = function (entity) {
+    }
+    update(entity) {
         this.unitOfWork.update(entity);
-    };
-    UnitOfWorkInMemory.prototype.saveChangeAsync = function () {
+    }
+    saveChangeAsync() {
         return this.unitOfWork.saveChangeAsync();
-    };
-    UnitOfWorkInMemory.prototype.connectAsync = function () {
-        var _this = this;
-        var p = new Promise(function (resolve, reject) {
-            mockgoose(mongoose).then(function () __awaiter(this, void 0, void 0, function* () {
-                yield _this.unitOfWork.connectAsync("xxx");
+    }
+    connectAsync() {
+        let p = new Promise((resolve, reject) => {
+            mockgoose(mongoose).then(() => __awaiter(this, void 0, void 0, function* () {
+                yield this.unitOfWork.connectAsync("xxx");
                 resolve();
             }));
         });
         return p;
-    };
-    UnitOfWorkInMemory.prototype.closeAsync = function () {
-        var _this = this;
-        var p = new Promise(function (resolve, reject) {
-            mockgoose.reset(function () __awaiter(this, void 0, void 0, function* () {
-                yield _this.unitOfWork.closeAsync();
+    }
+    closeAsync() {
+        let p = new Promise((resolve, reject) => {
+            mockgoose.reset(() => __awaiter(this, void 0, void 0, function* () {
+                yield this.unitOfWork.closeAsync();
                 resolve();
             }));
         });
         return p;
-    };
-    UnitOfWorkInMemory.prototype.resetAsync = function () {
-        var p = new Promise(function (resolve, reject) {
-            mockgoose.reset(function () {
+    }
+    resetAsync() {
+        let p = new Promise((resolve, reject) => {
+            mockgoose.reset(() => {
                 resolve();
             });
         });
         return p;
-    };
-    return UnitOfWorkInMemory;
-}());
+    }
+}
 exports.UnitOfWorkInMemory = UnitOfWorkInMemory;
 
 //# sourceMappingURL=unitOfWorkInMemory.js.map

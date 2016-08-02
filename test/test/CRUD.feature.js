@@ -9,14 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const assert = require("assert");
-const main_1 = require("./../main");
+const unitOfWork_1 = require("./../code/unitOfWork");
+const unitOfWorkInMemory_1 = require("./../code/unitOfWorkInMemory");
 const peopleRepository_1 = require("./peopleRepository");
 let mydb;
 let unitOfWork;
 let prepareToRun = (_self, tag) => {
     _self.Before({ tags: [tag] }, (scenario) => __awaiter(this, void 0, void 0, function* () {
-        unitOfWork = new main_1.UnitOfWork();
-        mydb = new main_1.UnitOfWorkInMemory(unitOfWork);
+        unitOfWork = new unitOfWork_1.UnitOfWork();
+        mydb = new unitOfWorkInMemory_1.UnitOfWorkInMemory(unitOfWork);
         yield mydb.connectAsync();
     }));
     _self.After({ tags: [tag] }, (scenario) => __awaiter(this, void 0, void 0, function* () {

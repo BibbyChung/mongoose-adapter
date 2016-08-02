@@ -5,16 +5,13 @@ Make the mongoose easy to use.
 ## Install
 
 ``` shell
-$ npm install
-$ gulp
+$ npm install mongoose mockgoose --save
+$ typings install dt~es6-promise dt~mongoose dt~mongoose-promise --global --save
 ```
 
-> **Note:** You have to install [cucumber-js](https://github.com/cucumber/cucumber-js) and [typings](https://github.com/typings/typings) in your global environment.
+> **Note:** You have to install [typings](https://github.com/typings/typings) in your global environment.
 
 ## Quick Start
-
-### javascript 
-(later..)
 
 ### typescript
 
@@ -115,3 +112,6 @@ let data = await rep.getAll()
     .find({ _id: "1qaz2wsx" })
     .exec();
 ```
+
+### javascript 
+(later..)
