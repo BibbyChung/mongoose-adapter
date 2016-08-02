@@ -2,17 +2,28 @@
 
 Make the mongoose easy to use.
 
-## Quick Start
-
-### **TypeScript**
+## Install
 
 Install the components
 
-``` shell
+```shell
 $ npm install mongoose-adapter mockgoose mongoose --save
+```
+
+If you're use TypeScirpt, please install the definitions.
+
+```shell
 $ typings install dt~es6-promise dt~mongoose dt~mongoose-promise --global --save
 ```
+
 > **Note:** You have to install [typings](https://github.com/typings/typings) in your global environment.
+
+
+## Quick Start
+
+You can use TypeScirpt or JavaScript. Up to you.
+
+### TypeScript
 
 Implement the BaseRepository for your mongoose collections.
 
@@ -86,6 +97,7 @@ rep.update(entity);
 
 await unitOfWork.saveChangeAsync();
 
+
 //==== delete data ====
 let unitOfWork = new UnitOfWork();
 let rep = new PeopleRepository(unitOfWork);
@@ -98,6 +110,7 @@ for (let item of data) {
 }
 
 await unitOfWork.saveChangeAsync();
+
 
 //==== get data ====
 let unitOfWork = new UnitOfWork();
