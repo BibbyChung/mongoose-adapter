@@ -13,7 +13,7 @@ $ npm install mongoose-adapter mockgoose mongoose --save
 If you're use TypeScirpt, please install the definitions.
 
 ```shell
-$ typings install dt~es6-promise dt~mongoose dt~mongoose-promise --global --save
+$ typings install dt~mongoose dt~mongoose-promise --global --save
 ```
 
 > **Note:** You have to install [typings](https://github.com/typings/typings) in your global environment.
