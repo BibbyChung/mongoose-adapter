@@ -1,6 +1,6 @@
 {
   "name": "mongoose-adapter",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Make the mongoose to use easily.",
   "main": "./dist/main.js",
   "directories": {
