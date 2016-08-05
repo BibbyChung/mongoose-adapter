@@ -1,4 +1,4 @@
-# mongoose-adapter [![Build Status](https://travis-ci.org/BibbyChung/mongoose-adapter.svg?branch=master)](https://travis-ci.org/BibbyChung/mongoose-adapter)
+# mongoose-adapter [![Build Status](https://travis-ci.org/BibbyChung/mongoose-adapter.svg?branch=master)](https://travis-ci.org/BibbyChung/mongoose-adapter) [![npm](https://img.shields.io/npm/v/mongoose-adapter.svg?maxAge=2592000)]()
 
 Make the mongoose easy to use. 
 
