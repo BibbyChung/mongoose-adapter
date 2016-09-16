@@ -1,7 +1,7 @@
 /// <reference path="./../../typings/index.d.ts" />
 "use strict";
 const mongoose = require("mongoose");
-class BaseRepository {
+class RepositoryBase {
     constructor(unitOfWork) {
         this.unitOfWork = unitOfWork;
         this.initSchemaDefinition();
@@ -22,5 +22,5 @@ class BaseRepository {
         }
     }
 }
-exports.BaseRepository = BaseRepository;
-//# sourceMappingURL=baseRepository.js.map
+exports.RepositoryBase = RepositoryBase;
+//# sourceMappingURL=repositoryBase.js.map

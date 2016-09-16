@@ -1,8 +1,8 @@
 /// <reference path="./../../typings/index.d.ts" />
 "use strict";
 const mongoose = require("mongoose");
-const baseRepository_1 = require("./../code/baseRepository");
-class PersonRep extends baseRepository_1.BaseRepository {
+const repositoryBase_1 = require("./../code/repositoryBase");
+class PersonRep extends repositoryBase_1.RepositoryBase {
     constructor(unitOfWork) {
         super(unitOfWork);
     }

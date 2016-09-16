@@ -2,9 +2,9 @@
 
 import * as mongoose from "mongoose";
 import {UnitOfWorkBase} from "./../code/unitOfWorkBase";
-import {BaseRepository} from "./../code/baseRepository";
+import {RepositoryBase} from "./../code/repositoryBase";
 
-export class PersonRep extends BaseRepository<IPerson> {
+export class PersonRep extends RepositoryBase<IPerson> {
 
 	constructor(unitOfWork: UnitOfWorkBase) {
 		super(unitOfWork);

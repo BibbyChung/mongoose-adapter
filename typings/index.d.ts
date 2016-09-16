@@ -3,6 +3,6 @@
 /// <reference path="globals/mongoose/index.d.ts" />
 /// <reference path="globals/node/index.d.ts" />
 
-export {BaseRepository} from "./../src/code/baseRepository";
+export {RepositoryBase} from "./../src/code/repositoryBase";
 export {UnitOfWorkBase} from "./../src/code/unitOfWorkBase";
 export {UnitOfWorkInMemory} from "./../src/code/unitOfWorkInMemory";

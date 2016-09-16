@@ -1,7 +1,7 @@
 /// <reference path="./../../typings/index.d.ts" />
 
 import * as mongoose from "mongoose";
-import {BaseRepository} from "./baseRepository";
+import {RepositoryBase} from "./repositoryBase";
 
 export abstract class UnitOfWorkBase {
 

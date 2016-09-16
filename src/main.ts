@@ -1,5 +1,5 @@
-import {BaseRepository} from "./code/baseRepository";
+import {RepositoryBase} from "./code/repositoryBase";
 import {UnitOfWorkBase} from "./code/unitOfWorkBase";
 import {UnitOfWorkInMemory} from "./code/unitOfWorkInMemory";
 
-export {BaseRepository, UnitOfWorkBase, UnitOfWorkInMemory};
+export {RepositoryBase, UnitOfWorkBase, UnitOfWorkInMemory};

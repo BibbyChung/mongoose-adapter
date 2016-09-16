@@ -3,7 +3,7 @@
 import * as mongoose from "mongoose";
 import {UnitOfWorkBase} from "./unitOfWorkBase";
 
-export abstract class BaseRepository<T extends mongoose.Document> {
+export abstract class RepositoryBase<T extends mongoose.Document> {
 
 	abstract getDocumentName(): string;
 
