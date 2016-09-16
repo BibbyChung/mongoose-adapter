@@ -5,7 +5,9 @@ const peopleRepository_1 = require("./peopleRepository");
 class MyUnitOfWork extends unitOfWorkBase_1.UnitOfWorkBase {
     constructor(...args) {
         super(...args);
-        this.peopleRepository = new peopleRepository_1.PeopleRepository(this);
+        this.reps = {
+            peopleRepository: new peopleRepository_1.PeopleRepository(this)
+        };
     }
 }
 exports.MyUnitOfWork = MyUnitOfWork;

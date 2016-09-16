@@ -5,6 +5,8 @@ import {PeopleRepository} from "./peopleRepository";
 
 export class MyUnitOfWork extends UnitOfWorkBase {
 
-    peopleRepository = new PeopleRepository(this);
+    reps = {
+        peopleRepository: new PeopleRepository(this)
+    };
 
 }

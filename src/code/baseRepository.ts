@@ -40,22 +40,4 @@ export abstract class BaseRepository<T extends mongoose.Document> {
 
 	}
 
-	add<T extends mongoose.Document>(entity: T) {
-
-		this.unitOfWork.add(entity);
-
-	}
-
-	remove<T extends mongoose.Document>(entity: T) {
-
-		this.unitOfWork.remove(entity);
-
-	}
-
-	update<T extends mongoose.Document>(entity: T) {
-
-		this.unitOfWork.update(entity);
-
-	}
-
 }

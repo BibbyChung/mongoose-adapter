@@ -21,15 +21,6 @@ class BaseRepository {
             return mongoose.model(documentName, null, documentName);
         }
     }
-    add(entity) {
-        this.unitOfWork.add(entity);
-    }
-    remove(entity) {
-        this.unitOfWork.remove(entity);
-    }
-    update(entity) {
-        this.unitOfWork.update(entity);
-    }
 }
 exports.BaseRepository = BaseRepository;
 //# sourceMappingURL=baseRepository.js.map

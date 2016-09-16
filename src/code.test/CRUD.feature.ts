@@ -5,19 +5,19 @@ import {MyUnitOfWork} from "./myUnitOfWork";
 import {UnitOfWorkInMemory} from "./../code/unitOfWorkInMemory";
 import {PeopleRepository, IPeople} from "./peopleRepository";
 
-let mydb: UnitOfWorkInMemory;
-let myUnitOfWork: MyUnitOfWork;
+let myDb: MyUnitOfWork;
+let myDbInMemory: UnitOfWorkInMemory;
 let prepareToRun = (_self, tag: string) => {
   _self.Before({ tags: [tag] }, async (scenario: any) => {
 
-    myUnitOfWork = new MyUnitOfWork();
-    mydb = new UnitOfWorkInMemory(myUnitOfWork);
-    await mydb.connectAsync();
+    myDb = new MyUnitOfWork();
+    myDbInMemory = new UnitOfWorkInMemory(myDb);
+    await myDbInMemory.connectAsync();
 
   });
   _self.After({ tags: [tag] }, async (scenario) => {
 
-    await mydb.closeAsync();
+    await myDbInMemory.closeAsync();
 
   });
 };
@@ -28,7 +28,7 @@ export = function () {
 
   this.Given(/^The database is empty\.$/, async function () {
 
-    await mydb.resetAsync();
+    await myDbInMemory.resetAsync();
 
   });
 
@@ -36,64 +36,59 @@ export = function () {
 
     let arr: IPeople[] = table.hashes();
 
-    //let peopleRep = new PeopleRepository(myUnitOfWork);
-
     for (let item of arr) {
 
-      var entity = myUnitOfWork.peopleRepository.createNewEntity();
+      var entity = myDb.reps.peopleRepository.createNewEntity();
       entity._id = item._id;
       entity.name = item.name;
       entity.age = item.age;
       entity.birthday = item.birthday;
-      myUnitOfWork.peopleRepository.add(entity);
+      myDb.add(entity);
 
     }
 
-    await myUnitOfWork.saveChangeAsync();
+    await myDb.saveChangeAsync();
 
   });
 
   this.Given(/^The database has a record\.$/, async function (table) {
 
-    await mydb.resetAsync();
+    await myDbInMemory.resetAsync();
 
     let arr: IPeople[] = table.hashes();
-    var rep = myUnitOfWork.peopleRepository;
 
     for (let item of arr) {
 
-      var entity = rep.createNewEntity();
+      var entity = myDb.reps.peopleRepository.createNewEntity();
       entity._id = item._id;
       entity.name = item.name;
       entity.age = item.age;
       entity.birthday = item.birthday;
-      rep.add(entity);
+      myDb.add(entity);
 
     }
 
-    await myUnitOfWork.saveChangeAsync();
+    await myDb.saveChangeAsync();
 
   });
 
   this.When(/^Execute the method of delete\.$/, async function () {
 
-    let rep = myUnitOfWork.peopleRepository;
-    let data = await rep.getAll()
+    let data = await myDb.reps.peopleRepository.getAll()
       .find({ _id: "abcdefghijk" })
       .exec();
 
     for (let item of data) {
-      rep.remove(item);
+      myDb.remove(item);
     }
 
-    await myUnitOfWork.saveChangeAsync();
+    await myDb.saveChangeAsync();
 
   });
 
   this.Then(/^The result of database is empty\.$/, async function () {
 
-    let rep = myUnitOfWork.peopleRepository;
-    let data = await rep.getAll()
+    let data = await myDb.reps.peopleRepository.getAll()
       .find({})
       .exec();
 
@@ -105,23 +100,17 @@ export = function () {
 
     let arr: IPeople[] = table.hashes();
 
-    let rep = myUnitOfWork.peopleRepository;
-    let data = await rep.getAll()
+    let data = await myDb.reps.peopleRepository.getAll()
       .find({ _id: "abcdefghijk" })
       .exec();
 
     data[0].name = arr[0].name;
     data[0].age = arr[0].age;
     data[0].birthday = arr[0].birthday
-    rep.update(data[0]);
+    myDb.update(data[0]);
 
-    await myUnitOfWork.saveChangeAsync();
+    await myDb.saveChangeAsync();
 
-  });
-
-  this.When(/^Execute the method of get\.$/, function (callback) {
-    // Write code here that turns the phrase above into concrete actions
-    callback(null, 'pending');
   });
 
   this.Then(/^The result of database has a record\.$/, async function (table) {
@@ -129,8 +118,7 @@ export = function () {
     let arr: IPeople[] = table.hashes();
     let total = arr.length;
 
-    let rep = myUnitOfWork.peopleRepository;
-    let data = await rep.getAll()
+    let data = await myDb.reps.peopleRepository.getAll()
       .find({})
       .exec();
 
