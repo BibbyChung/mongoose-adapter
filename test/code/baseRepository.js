@@ -2,14 +2,9 @@
 "use strict";
 const mongoose = require("mongoose");
 class BaseRepository {
-    constructor() {
+    constructor(unitOfWork) {
+        this.unitOfWork = unitOfWork;
         this.initSchemaDefinition();
-    }
-    set unitOfWork(value) {
-        this._unitOfWork = value;
-    }
-    get unitOfWork() {
-        return this._unitOfWork;
     }
     initSchemaDefinition() {
         this._schema = this.getSchema();
@@ -27,13 +22,13 @@ class BaseRepository {
         }
     }
     add(entity) {
-        this._unitOfWork.add(entity);
+        this.unitOfWork.add(entity);
     }
     remove(entity) {
-        this._unitOfWork.remove(entity);
+        this.unitOfWork.remove(entity);
     }
     update(entity) {
-        this._unitOfWork.update(entity);
+        this.unitOfWork.update(entity);
     }
 }
 exports.BaseRepository = BaseRepository;

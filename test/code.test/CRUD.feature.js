@@ -9,15 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const assert = require("assert");
-const unitOfWork_1 = require("./../code/unitOfWork");
+const myUnitOfWork_1 = require("./myUnitOfWork");
 const unitOfWorkInMemory_1 = require("./../code/unitOfWorkInMemory");
-const peopleRepository_1 = require("./peopleRepository");
 let mydb;
-let unitOfWork;
+let myUnitOfWork;
 let prepareToRun = (_self, tag) => {
     _self.Before({ tags: [tag] }, (scenario) => __awaiter(this, void 0, void 0, function* () {
-        unitOfWork = new unitOfWork_1.UnitOfWork();
-        mydb = new unitOfWorkInMemory_1.UnitOfWorkInMemory(unitOfWork);
+        myUnitOfWork = new myUnitOfWork_1.MyUnitOfWork();
+        mydb = new unitOfWorkInMemory_1.UnitOfWorkInMemory(myUnitOfWork);
         yield mydb.connectAsync();
     }));
     _self.After({ tags: [tag] }, (scenario) => __awaiter(this, void 0, void 0, function* () {
@@ -34,50 +33,50 @@ module.exports = function () {
     this.When(/^Execute the method of create\.$/, function (table) {
         return __awaiter(this, void 0, void 0, function* () {
             let arr = table.hashes();
-            let peopleRep = new peopleRepository_1.PeopleRepository(unitOfWork);
+            //let peopleRep = new PeopleRepository(myUnitOfWork);
             for (let item of arr) {
-                var entity = peopleRep.createNewEntity();
+                var entity = myUnitOfWork.peopleRepository.createNewEntity();
                 entity._id = item._id;
                 entity.name = item.name;
                 entity.age = item.age;
                 entity.birthday = item.birthday;
-                peopleRep.add(entity);
+                myUnitOfWork.peopleRepository.add(entity);
             }
-            yield unitOfWork.saveChangeAsync();
+            yield myUnitOfWork.saveChangeAsync();
         });
     });
     this.Given(/^The database has a record\.$/, function (table) {
         return __awaiter(this, void 0, void 0, function* () {
             yield mydb.resetAsync();
             let arr = table.hashes();
-            let peopleRep = new peopleRepository_1.PeopleRepository(unitOfWork);
+            var rep = myUnitOfWork.peopleRepository;
             for (let item of arr) {
-                var entity = peopleRep.createNewEntity();
+                var entity = rep.createNewEntity();
                 entity._id = item._id;
                 entity.name = item.name;
                 entity.age = item.age;
                 entity.birthday = item.birthday;
-                peopleRep.add(entity);
+                rep.add(entity);
             }
-            yield unitOfWork.saveChangeAsync();
+            yield myUnitOfWork.saveChangeAsync();
         });
     });
     this.When(/^Execute the method of delete\.$/, function () {
         return __awaiter(this, void 0, void 0, function* () {
-            let peopleRep = new peopleRepository_1.PeopleRepository(unitOfWork);
-            let data = yield peopleRep.getAll()
+            let rep = myUnitOfWork.peopleRepository;
+            let data = yield rep.getAll()
                 .find({ _id: "abcdefghijk" })
                 .exec();
             for (let item of data) {
-                peopleRep.remove(item);
+                rep.remove(item);
             }
-            yield unitOfWork.saveChangeAsync();
+            yield myUnitOfWork.saveChangeAsync();
         });
     });
     this.Then(/^The result of database is empty\.$/, function () {
         return __awaiter(this, void 0, void 0, function* () {
-            let peopleRep = new peopleRepository_1.PeopleRepository(unitOfWork);
-            let data = yield peopleRep.getAll()
+            let rep = myUnitOfWork.peopleRepository;
+            let data = yield rep.getAll()
                 .find({})
                 .exec();
             assert.equal(data.length, 0);
@@ -86,15 +85,15 @@ module.exports = function () {
     this.When(/^Execute the method of update\.$/, function (table) {
         return __awaiter(this, void 0, void 0, function* () {
             let arr = table.hashes();
-            let peopleRep = new peopleRepository_1.PeopleRepository(unitOfWork);
-            let data = yield peopleRep.getAll()
+            let rep = myUnitOfWork.peopleRepository;
+            let data = yield rep.getAll()
                 .find({ _id: "abcdefghijk" })
                 .exec();
             data[0].name = arr[0].name;
             data[0].age = arr[0].age;
             data[0].birthday = arr[0].birthday;
-            peopleRep.update(data[0]);
-            yield unitOfWork.saveChangeAsync();
+            rep.update(data[0]);
+            yield myUnitOfWork.saveChangeAsync();
         });
     });
     this.When(/^Execute the method of get\.$/, function (callback) {
@@ -105,8 +104,8 @@ module.exports = function () {
         return __awaiter(this, void 0, void 0, function* () {
             let arr = table.hashes();
             let total = arr.length;
-            let peopleRep = new peopleRepository_1.PeopleRepository(unitOfWork);
-            let data = yield peopleRep.getAll()
+            let rep = myUnitOfWork.peopleRepository;
+            let data = yield rep.getAll()
                 .find({})
                 .exec();
             assert.equal(data.length, total);

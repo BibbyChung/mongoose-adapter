@@ -1,6 +1,5 @@
 import {BaseRepository} from "./code/baseRepository";
-import {UnitOfWork} from "./code/unitOfWork";
+import {UnitOfWorkBase} from "./code/unitOfWorkBase";
 import {UnitOfWorkInMemory} from "./code/unitOfWorkInMemory";
-import {IUnitOfWork} from "./code/IUnitOfWork";
 
-export {BaseRepository, IUnitOfWork, UnitOfWork, UnitOfWorkInMemory};
+export {BaseRepository, UnitOfWorkBase, UnitOfWorkInMemory};

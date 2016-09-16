@@ -1,17 +1,17 @@
 /// <reference path="./../../typings/index.d.ts" />
 
 import * as assert from "assert";
-import {UnitOfWork} from "./../code/unitOfWork";
+import {MyUnitOfWork} from "./myUnitOfWork";
 import {UnitOfWorkInMemory} from "./../code/unitOfWorkInMemory";
 import {PeopleRepository, IPeople} from "./peopleRepository";
 
 let mydb: UnitOfWorkInMemory;
-let unitOfWork: UnitOfWork;
+let myUnitOfWork: MyUnitOfWork;
 let prepareToRun = (_self, tag: string) => {
   _self.Before({ tags: [tag] }, async (scenario: any) => {
 
-    unitOfWork = new UnitOfWork();
-    mydb = new UnitOfWorkInMemory(unitOfWork);
+    myUnitOfWork = new MyUnitOfWork();
+    mydb = new UnitOfWorkInMemory(myUnitOfWork);
     await mydb.connectAsync();
 
   });
@@ -35,20 +35,21 @@ export = function () {
   this.When(/^Execute the method of create\.$/, async function (table) {
 
     let arr: IPeople[] = table.hashes();
-    let peopleRep = new PeopleRepository(unitOfWork);
+
+    //let peopleRep = new PeopleRepository(myUnitOfWork);
 
     for (let item of arr) {
 
-      var entity = peopleRep.createNewEntity();
+      var entity = myUnitOfWork.peopleRepository.createNewEntity();
       entity._id = item._id;
       entity.name = item.name;
       entity.age = item.age;
       entity.birthday = item.birthday;
-      peopleRep.add(entity);
+      myUnitOfWork.peopleRepository.add(entity);
 
     }
 
-    await unitOfWork.saveChangeAsync();
+    await myUnitOfWork.saveChangeAsync();
 
   });
 
@@ -57,42 +58,42 @@ export = function () {
     await mydb.resetAsync();
 
     let arr: IPeople[] = table.hashes();
-    let peopleRep = new PeopleRepository(unitOfWork);
+    var rep = myUnitOfWork.peopleRepository;
 
     for (let item of arr) {
 
-      var entity = peopleRep.createNewEntity();
+      var entity = rep.createNewEntity();
       entity._id = item._id;
       entity.name = item.name;
       entity.age = item.age;
       entity.birthday = item.birthday;
-      peopleRep.add(entity);
+      rep.add(entity);
 
     }
 
-    await unitOfWork.saveChangeAsync();
+    await myUnitOfWork.saveChangeAsync();
 
   });
 
   this.When(/^Execute the method of delete\.$/, async function () {
 
-    let peopleRep = new PeopleRepository(unitOfWork);
-    let data = await peopleRep.getAll()
+    let rep = myUnitOfWork.peopleRepository;
+    let data = await rep.getAll()
       .find({ _id: "abcdefghijk" })
       .exec();
 
     for (let item of data) {
-      peopleRep.remove(item);
+      rep.remove(item);
     }
 
-    await unitOfWork.saveChangeAsync();
+    await myUnitOfWork.saveChangeAsync();
 
   });
 
   this.Then(/^The result of database is empty\.$/, async function () {
 
-    let peopleRep = new PeopleRepository(unitOfWork);
-    let data = await peopleRep.getAll()
+    let rep = myUnitOfWork.peopleRepository;
+    let data = await rep.getAll()
       .find({})
       .exec();
 
@@ -104,17 +105,17 @@ export = function () {
 
     let arr: IPeople[] = table.hashes();
 
-    let peopleRep = new PeopleRepository(unitOfWork);
-    let data = await peopleRep.getAll()
+    let rep = myUnitOfWork.peopleRepository;
+    let data = await rep.getAll()
       .find({ _id: "abcdefghijk" })
       .exec();
 
     data[0].name = arr[0].name;
     data[0].age = arr[0].age;
     data[0].birthday = arr[0].birthday
-    peopleRep.update(data[0]);
+    rep.update(data[0]);
 
-    await unitOfWork.saveChangeAsync();
+    await myUnitOfWork.saveChangeAsync();
 
   });
 
@@ -128,8 +129,8 @@ export = function () {
     let arr: IPeople[] = table.hashes();
     let total = arr.length;
 
-    let peopleRep = new PeopleRepository(unitOfWork);
-    let data = await peopleRep.getAll()
+    let rep = myUnitOfWork.peopleRepository;
+    let data = await rep.getAll()
       .find({})
       .exec();
 

@@ -1,10 +1,9 @@
 /// <reference path="./../../typings/index.d.ts" />
 
 import * as mongoose from "mongoose";
-import {IUnitOfWork} from "./IUnitOfWork";
 import {BaseRepository} from "./baseRepository";
 
-export class UnitOfWork implements IUnitOfWork {
+export abstract class UnitOfWorkBase {
 
 	private addArr: mongoose.Document[] = [];
 	private removeArr: mongoose.Document[] = [];

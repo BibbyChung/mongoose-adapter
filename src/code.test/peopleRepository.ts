@@ -1,14 +1,13 @@
 /// <reference path="./../../typings/index.d.ts" />
 
 import * as mongoose from "mongoose";
-import {IUnitOfWork} from "./../code/IUnitOfWork";
+import {UnitOfWorkBase} from "./../code/unitOfWorkBase";
 import {BaseRepository} from "./../code/baseRepository";
 
 export class PeopleRepository extends BaseRepository<IPeople> {
 
-	constructor(unitOfWork: IUnitOfWork) {
-		super();
-		this.unitOfWork = unitOfWork;
+	constructor(unitOfWork: UnitOfWorkBase) {
+		super(unitOfWork);
 	}
 
 	getDocumentName() {

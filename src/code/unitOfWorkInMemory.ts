@@ -1,13 +1,12 @@
 /// <reference path="./../../typings/index.d.ts" />
 
-import {IUnitOfWork} from "./IUnitOfWork";
-import {UnitOfWork} from "./unitOfWork";
+import {UnitOfWorkBase} from "./unitOfWorkBase";
 import * as mongoose from "mongoose";
 let mockgoose = require("mockgoose");
 
-export class UnitOfWorkInMemory implements IUnitOfWork {
+export class UnitOfWorkInMemory {
 
-    constructor(private unitOfWork: IUnitOfWork) { }
+    constructor(private unitOfWork: UnitOfWorkBase) { }
 
 	add<T extends mongoose.Document>(entity: T) {
 		this.unitOfWork.add(entity);

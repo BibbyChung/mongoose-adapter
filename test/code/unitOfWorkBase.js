@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const mongoose = require("mongoose");
-class UnitOfWork {
+class UnitOfWorkBase {
     constructor() {
         this.addArr = [];
         this.removeArr = [];
@@ -106,6 +106,5 @@ class UnitOfWork {
         return p;
     }
 }
-exports.UnitOfWork = UnitOfWork;
-
-//# sourceMappingURL=unitOfWork.js.map
+exports.UnitOfWorkBase = UnitOfWorkBase;
+//# sourceMappingURL=unitOfWorkBase.js.map

@@ -1,7 +1,7 @@
 /// <reference path="./../../typings/index.d.ts" />
 
 import * as mongoose from "mongoose";
-import {IUnitOfWork} from "./IUnitOfWork";
+import {UnitOfWorkBase} from "./unitOfWorkBase";
 
 export abstract class BaseRepository<T extends mongoose.Document> {
 
@@ -11,15 +11,7 @@ export abstract class BaseRepository<T extends mongoose.Document> {
 
 	private _schema;
 
-	private _unitOfWork: IUnitOfWork;
-	set unitOfWork(value) {
-		this._unitOfWork = value;
-	}
-	get unitOfWork() {
-		return this._unitOfWork;
-	}
-
-	constructor() {
+	constructor(private unitOfWork: UnitOfWorkBase) {
 
 		this.initSchemaDefinition();
 
@@ -50,19 +42,19 @@ export abstract class BaseRepository<T extends mongoose.Document> {
 
 	add<T extends mongoose.Document>(entity: T) {
 
-		this._unitOfWork.add(entity);
+		this.unitOfWork.add(entity);
 
 	}
 
 	remove<T extends mongoose.Document>(entity: T) {
 
-		this._unitOfWork.remove(entity);
+		this.unitOfWork.remove(entity);
 
 	}
 
 	update<T extends mongoose.Document>(entity: T) {
 
-		this._unitOfWork.update(entity);
+		this.unitOfWork.update(entity);
 
 	}
 
