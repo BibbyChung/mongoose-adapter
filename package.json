@@ -24,8 +24,8 @@
   },
   "homepage": "https://github.com/BibbyChung/mongoose-adapter#readme",
   "dependencies": {
-    "mongoose": "^4.5.7",
-    "mockgoose": "^6.0.3"
+    "mongoose": "^4.6.0",
+    "mockgoose": "^6.0.6"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
