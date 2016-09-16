@@ -2,7 +2,7 @@
 "use strict";
 const mongoose = require("mongoose");
 const baseRepository_1 = require("./../code/baseRepository");
-class PeopleRepository extends baseRepository_1.BaseRepository {
+class PersonRep extends baseRepository_1.BaseRepository {
     constructor(unitOfWork) {
         super(unitOfWork);
     }
@@ -20,5 +20,5 @@ class PeopleRepository extends baseRepository_1.BaseRepository {
         return s;
     }
 }
-exports.PeopleRepository = PeopleRepository;
-//# sourceMappingURL=peopleRepository.js.map
+exports.PersonRep = PersonRep;
+//# sourceMappingURL=personRep.js.map

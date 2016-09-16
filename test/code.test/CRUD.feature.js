@@ -34,7 +34,7 @@ module.exports = function () {
         return __awaiter(this, void 0, void 0, function* () {
             let arr = table.hashes();
             for (let item of arr) {
-                var entity = myDb.reps.peopleRepository.createNewEntity();
+                var entity = myDb.reps.personRep.createNewEntity();
                 entity._id = item._id;
                 entity.name = item.name;
                 entity.age = item.age;
@@ -49,7 +49,7 @@ module.exports = function () {
             yield myDbInMemory.resetAsync();
             let arr = table.hashes();
             for (let item of arr) {
-                var entity = myDb.reps.peopleRepository.createNewEntity();
+                var entity = myDb.reps.personRep.createNewEntity();
                 entity._id = item._id;
                 entity.name = item.name;
                 entity.age = item.age;
@@ -61,7 +61,7 @@ module.exports = function () {
     });
     this.When(/^Execute the method of delete\.$/, function () {
         return __awaiter(this, void 0, void 0, function* () {
-            let data = yield myDb.reps.peopleRepository.getAll()
+            let data = yield myDb.reps.personRep.getAll()
                 .find({ _id: "abcdefghijk" })
                 .exec();
             for (let item of data) {
@@ -72,7 +72,7 @@ module.exports = function () {
     });
     this.Then(/^The result of database is empty\.$/, function () {
         return __awaiter(this, void 0, void 0, function* () {
-            let data = yield myDb.reps.peopleRepository.getAll()
+            let data = yield myDb.reps.personRep.getAll()
                 .find({})
                 .exec();
             assert.equal(data.length, 0);
@@ -81,7 +81,7 @@ module.exports = function () {
     this.When(/^Execute the method of update\.$/, function (table) {
         return __awaiter(this, void 0, void 0, function* () {
             let arr = table.hashes();
-            let data = yield myDb.reps.peopleRepository.getAll()
+            let data = yield myDb.reps.personRep.getAll()
                 .find({ _id: "abcdefghijk" })
                 .exec();
             data[0].name = arr[0].name;
@@ -95,7 +95,7 @@ module.exports = function () {
         return __awaiter(this, void 0, void 0, function* () {
             let arr = table.hashes();
             let total = arr.length;
-            let data = yield myDb.reps.peopleRepository.getAll()
+            let data = yield myDb.reps.personRep.getAll()
                 .find({})
                 .exec();
             assert.equal(data.length, total);

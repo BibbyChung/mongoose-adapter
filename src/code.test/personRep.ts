@@ -4,7 +4,7 @@ import * as mongoose from "mongoose";
 import {UnitOfWorkBase} from "./../code/unitOfWorkBase";
 import {BaseRepository} from "./../code/baseRepository";
 
-export class PeopleRepository extends BaseRepository<IPeople> {
+export class PersonRep extends BaseRepository<IPerson> {
 
 	constructor(unitOfWork: UnitOfWorkBase) {
 		super(unitOfWork);
@@ -29,7 +29,7 @@ export class PeopleRepository extends BaseRepository<IPeople> {
 
 }
 
-export interface IPeople extends mongoose.Document {
+export interface IPerson extends mongoose.Document {
 	_id: string;
 	name: string,
 	age: number,

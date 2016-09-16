@@ -1,12 +1,12 @@
 /// <reference path="./../../typings/index.d.ts" />
 
 import {UnitOfWorkBase} from "./../code/unitOfWorkBase";
-import {PeopleRepository} from "./peopleRepository";
+import {PersonRep} from "./personRep";
 
 export class MyUnitOfWork extends UnitOfWorkBase {
 
     reps = {
-        peopleRepository: new PeopleRepository(this)
+        personRep: new PersonRep(this)
     };
 
 }

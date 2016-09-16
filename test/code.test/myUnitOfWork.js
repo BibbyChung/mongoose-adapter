@@ -1,12 +1,12 @@
 /// <reference path="./../../typings/index.d.ts" />
 "use strict";
 const unitOfWorkBase_1 = require("./../code/unitOfWorkBase");
-const peopleRepository_1 = require("./peopleRepository");
+const personRep_1 = require("./personRep");
 class MyUnitOfWork extends unitOfWorkBase_1.UnitOfWorkBase {
     constructor(...args) {
         super(...args);
         this.reps = {
-            peopleRepository: new peopleRepository_1.PeopleRepository(this)
+            personRep: new personRep_1.PersonRep(this)
         };
     }
 }

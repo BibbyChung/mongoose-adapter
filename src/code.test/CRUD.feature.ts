@@ -3,7 +3,7 @@
 import * as assert from "assert";
 import {MyUnitOfWork} from "./myUnitOfWork";
 import {UnitOfWorkInMemory} from "./../code/unitOfWorkInMemory";
-import {PeopleRepository, IPeople} from "./peopleRepository";
+import {PersonRep, IPerson} from "./personRep";
 
 let myDb: MyUnitOfWork;
 let myDbInMemory: UnitOfWorkInMemory;
@@ -34,11 +34,11 @@ export = function () {
 
   this.When(/^Execute the method of create\.$/, async function (table) {
 
-    let arr: IPeople[] = table.hashes();
+    let arr: IPerson[] = table.hashes();
 
     for (let item of arr) {
 
-      var entity = myDb.reps.peopleRepository.createNewEntity();
+      var entity = myDb.reps.personRep.createNewEntity();
       entity._id = item._id;
       entity.name = item.name;
       entity.age = item.age;
@@ -55,11 +55,11 @@ export = function () {
 
     await myDbInMemory.resetAsync();
 
-    let arr: IPeople[] = table.hashes();
+    let arr: IPerson[] = table.hashes();
 
     for (let item of arr) {
 
-      var entity = myDb.reps.peopleRepository.createNewEntity();
+      var entity = myDb.reps.personRep.createNewEntity();
       entity._id = item._id;
       entity.name = item.name;
       entity.age = item.age;
@@ -74,7 +74,7 @@ export = function () {
 
   this.When(/^Execute the method of delete\.$/, async function () {
 
-    let data = await myDb.reps.peopleRepository.getAll()
+    let data = await myDb.reps.personRep.getAll()
       .find({ _id: "abcdefghijk" })
       .exec();
 
@@ -88,7 +88,7 @@ export = function () {
 
   this.Then(/^The result of database is empty\.$/, async function () {
 
-    let data = await myDb.reps.peopleRepository.getAll()
+    let data = await myDb.reps.personRep.getAll()
       .find({})
       .exec();
 
@@ -98,9 +98,9 @@ export = function () {
 
   this.When(/^Execute the method of update\.$/, async function (table) {
 
-    let arr: IPeople[] = table.hashes();
+    let arr: IPerson[] = table.hashes();
 
-    let data = await myDb.reps.peopleRepository.getAll()
+    let data = await myDb.reps.personRep.getAll()
       .find({ _id: "abcdefghijk" })
       .exec();
 
@@ -115,10 +115,10 @@ export = function () {
 
   this.Then(/^The result of database has a record\.$/, async function (table) {
 
-    let arr: IPeople[] = table.hashes();
+    let arr: IPerson[] = table.hashes();
     let total = arr.length;
 
-    let data = await myDb.reps.peopleRepository.getAll()
+    let data = await myDb.reps.personRep.getAll()
       .find({})
       .exec();
 
