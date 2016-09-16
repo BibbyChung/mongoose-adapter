@@ -1,7 +1,7 @@
 {
 	"globalDependencies": {
-		"mongoose": "registry:dt/mongoose#4.5.4+20160721201159",
-		"mongoose-promise": "registry:dt/mongoose-promise#4.5.4+20160720003345",
-		"node": "registry:dt/node#6.0.0+20160728152422"
+		"mongoose": "registry:dt/mongoose#4.5.9+20160826204928",
+		"mongoose-promise": "registry:dt/mongoose-promise#4.5.4+20160822161941",
+		"node": "registry:dt/node#6.0.0+20160915134512"
 	}
 }
