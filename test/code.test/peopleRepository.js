@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 const baseRepository_1 = require("./../code/baseRepository");
 class PeopleRepository extends baseRepository_1.BaseRepository {
     constructor(unitOfWork) {
-        super(unitOfWork);
+        super();
+        this.unitOfWork = unitOfWork;
     }
     getDocumentName() {
         return "People";

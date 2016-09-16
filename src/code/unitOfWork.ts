@@ -2,6 +2,7 @@
 
 import * as mongoose from "mongoose";
 import {IUnitOfWork} from "./IUnitOfWork";
+import {BaseRepository} from "./baseRepository";
 
 export class UnitOfWork implements IUnitOfWork {
 

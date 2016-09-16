@@ -2,30 +2,38 @@
 "use strict";
 const mongoose = require("mongoose");
 class BaseRepository {
-    constructor(unitOfWork) {
-        this.unitOfWork = unitOfWork;
+    constructor() {
+        this.initSchemaDefinition();
+    }
+    set unitOfWork(value) {
+        this._unitOfWork = value;
+    }
+    get unitOfWork() {
+        return this._unitOfWork;
+    }
+    initSchemaDefinition() {
+        this._schema = this.getSchema();
     }
     createNewEntity() {
         return new (this.getAll())(null);
     }
     getAll() {
         let documentName = this.getDocumentName();
-        let schema = this.getSchema();
         try {
-            return mongoose.model(documentName, schema, documentName);
+            return mongoose.model(documentName, this._schema, documentName);
         }
         catch (ex) {
             return mongoose.model(documentName, null, documentName);
         }
     }
     add(entity) {
-        this.unitOfWork.add(entity);
+        this._unitOfWork.add(entity);
     }
     remove(entity) {
-        this.unitOfWork.remove(entity);
+        this._unitOfWork.remove(entity);
     }
     update(entity) {
-        this.unitOfWork.update(entity);
+        this._unitOfWork.update(entity);
     }
 }
 exports.BaseRepository = BaseRepository;

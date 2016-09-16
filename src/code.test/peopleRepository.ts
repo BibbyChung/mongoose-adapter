@@ -7,7 +7,8 @@ import {BaseRepository} from "./../code/baseRepository";
 export class PeopleRepository extends BaseRepository<IPeople> {
 
 	constructor(unitOfWork: IUnitOfWork) {
-		super(unitOfWork);
+		super();
+		this.unitOfWork = unitOfWork;
 	}
 
 	getDocumentName() {
