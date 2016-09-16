@@ -7,7 +7,7 @@ class PersonRep extends repositoryBase_1.RepositoryBase {
         super(unitOfWork);
     }
     getDocumentName() {
-        return "People";
+        return "Person";
     }
     getSchema() {
         let userSchema = {

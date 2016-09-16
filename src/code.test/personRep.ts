@@ -11,7 +11,7 @@ export class PersonRep extends RepositoryBase<IPerson> {
 	}
 
 	getDocumentName() {
-		return "People";
+		return "Person";
 	}
 
 	getSchema(): mongoose.Schema {
