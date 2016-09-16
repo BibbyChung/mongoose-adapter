@@ -3,8 +3,8 @@
 const unitOfWorkBase_1 = require("./../code/unitOfWorkBase");
 const personRep_1 = require("./personRep");
 class MyUnitOfWork extends unitOfWorkBase_1.UnitOfWorkBase {
-    constructor(...args) {
-        super(...args);
+    constructor() {
+        super();
         this.reps = {
             personRep: new personRep_1.PersonRep(this)
         };
