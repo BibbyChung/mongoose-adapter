@@ -29,10 +29,8 @@ Implement the BaseRepository for your mongoose collections.
 
 ```javascript
 
-/// <reference path="./../../typings/index.d.ts" />
-
 //myUnitOfWork.ts
-import {UnitOfWorkBase} from "./../code/unitOfWorkBase";
+import {UnitOfWorkBase} from "mongoose-adapter";
 import {PersonRep} from "./personRep";
 
 export class MyUnitOfWork extends UnitOfWorkBase {
@@ -49,8 +47,7 @@ export class MyUnitOfWork extends UnitOfWorkBase {
 
 //personRep.ts
 import * as mongoose from "mongoose";
-import {UnitOfWorkBase} from "./../code/unitOfWorkBase";
-import {RepositoryBase} from "./../code/repositoryBase";
+import {UnitOfWorkBase, RepositoryBase} from "mongoose-adapter";
 
 export class PersonRep extends RepositoryBase<IPerson> {
 
@@ -89,8 +86,8 @@ export interface IPerson extends mongoose.Document {
 Examples for CRUD
 
 ```javascript
-// ==== create data =====
 
+// ==== create data =====
 let myDb = new UnitOfWork();
 
 var entity = myDb.reps.personRep.createNewEntity();
@@ -104,7 +101,6 @@ await myDb.saveChangeAsync();
 
 
 //==== update data ====
-
 let myDb = new UnitOfWork();
 let data = await myDb.reps.personRep.getAll()
     .find({ _id: "1qaz2wsx" })

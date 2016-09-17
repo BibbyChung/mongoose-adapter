@@ -9,7 +9,7 @@ export abstract class RepositoryBase<T extends mongoose.Document> {
 
 	abstract getSchema(): mongoose.Schema;
 
-	private _schema;
+	private _model: mongoose.Model<T>;
 
 	constructor(private unitOfWork: UnitOfWorkBase) {
 
@@ -19,7 +19,12 @@ export abstract class RepositoryBase<T extends mongoose.Document> {
 
 	private initSchemaDefinition() {
 
-		this._schema = this.getSchema();
+		let documentName = this.getDocumentName();
+		try {
+			this._model = mongoose.model<T>(documentName, this.getSchema(), documentName);
+		} catch (ex) {
+			this._model = mongoose.model<T>(documentName, null, documentName);
+		}
 
 	}
 
@@ -31,13 +36,9 @@ export abstract class RepositoryBase<T extends mongoose.Document> {
 
 	getAll(): mongoose.Model<T> {
 
-		let documentName = this.getDocumentName();
-		try {
-			return mongoose.model<T>(documentName, this._schema, documentName);
-		} catch (ex) {
-			return mongoose.model<T>(documentName, null, documentName);
-		}
+		return this._model;
 
 	}
 
 }
+

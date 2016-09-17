@@ -7,19 +7,19 @@ class RepositoryBase {
         this.initSchemaDefinition();
     }
     initSchemaDefinition() {
-        this._schema = this.getSchema();
+        let documentName = this.getDocumentName();
+        try {
+            this._model = mongoose.model(documentName, this.getSchema(), documentName);
+        }
+        catch (ex) {
+            this._model = mongoose.model(documentName, null, documentName);
+        }
     }
     createNewEntity() {
         return new (this.getAll())(null);
     }
     getAll() {
-        let documentName = this.getDocumentName();
-        try {
-            return mongoose.model(documentName, this._schema, documentName);
-        }
-        catch (ex) {
-            return mongoose.model(documentName, null, documentName);
-        }
+        return this._model;
     }
 }
 exports.RepositoryBase = RepositoryBase;
