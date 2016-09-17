@@ -29,19 +29,40 @@ Implement the BaseRepository for your mongoose collections.
 
 ```javascript
 
-import {BaseRepository, IUnitOfWork} from "mongoose-adapter";
+/// <reference path="./../../typings/index.d.ts" />
 
-export class PeopleRepository extends BaseRepository<IPeople> {
+//myUnitOfWork.ts
+import {UnitOfWorkBase} from "./../code/unitOfWorkBase";
+import {PersonRep} from "./personRep";
 
-	constructor(unitOfWork: IUnitOfWork) {
+export class MyUnitOfWork extends UnitOfWorkBase {
+
+    constructor() {
+        super();
+    }
+
+    reps = {
+        personRep: new PersonRep(this)
+    };
+
+}
+
+//personRep.ts
+import * as mongoose from "mongoose";
+import {UnitOfWorkBase} from "./../code/unitOfWorkBase";
+import {RepositoryBase} from "./../code/repositoryBase";
+
+export class PersonRep extends RepositoryBase<IPerson> {
+
+	constructor(unitOfWork: UnitOfWorkBase) {
 		super(unitOfWork);
 	}
 
 	getDocumentName() {
-		return "People";
+		return "Person";
 	}
 
-	getSchema() {
+	getSchema(): mongoose.Schema {
 
 		let userSchema = {
 			_id: { type: String, index: { unique: true } },
@@ -56,36 +77,36 @@ export class PeopleRepository extends BaseRepository<IPeople> {
 
 }
 
-export interface IPeople extends mongoose.Document {
+export interface IPerson extends mongoose.Document {
 	_id: string;
 	name: string,
 	age: number,
 	birthday: Date
 }
+
+
 ```
 Examples for CRUD
 
 ```javascript
 // ==== create data =====
 
-let unitOfWork = new UnitOfWork();
-let rep = new PeopleRepository(unitOfWork);
+let myDb = new UnitOfWork();
 
-var entity = rep.createNewEntity();
+var entity = myDb.reps.personRep.createNewEntity();
 entity._id = "1qaz2wsx";
 entity.name = "Bibby Chung";
 entity.age = 18;
 entity.birthday = new Date("1990-04-01 13:20:30");
-peopleRep.add(entity);
+myDb.add(entity);
 
-await unitOfWork.saveChangeAsync();
+await myDb.saveChangeAsync();
 
 
 //==== update data ====
 
-let unitOfWork = new UnitOfWork();
-let rep = new PeopleRepository(unitOfWork);
-let data = await rep.getAll()
+let myDb = new UnitOfWork();
+let data = await myDb.reps.personRep.getAll()
     .find({ _id: "1qaz2wsx" })
     .exec();
 
@@ -93,29 +114,27 @@ let entity = data[0];
 entity.name = "Bibby Chung 1";
 entity.age = 22;
 entity.birthday = new Date("1995-08-08 13:20:30");
-rep.update(entity);
+myDb.update(entity);
 
-await unitOfWork.saveChangeAsync();
+await myDb.saveChangeAsync();
 
 
 //==== delete data ====
-let unitOfWork = new UnitOfWork();
-let rep = new PeopleRepository(unitOfWork);
-let data = await rep.getAll()
+let myDb = new UnitOfWork();
+let data = await myDb.reps.personRep.getAll()
     .find({ _id: "1qaz2wsx" })
     .exec();
 
 for (let item of data) {
-    rep.remove(item);
+    myDb.remove(item);
 }
 
-await unitOfWork.saveChangeAsync();
+await myDb.saveChangeAsync();
 
 
 //==== get data ====
-let unitOfWork = new UnitOfWork();
-let rep = new PeopleRepository(unitOfWork);
-let data = await rep.getAll()
+let myDb = new UnitOfWork();
+let data = await myDb.reps.personRep.getAll()
     .find({ _id: "1qaz2wsx" })
     .exec();
 
