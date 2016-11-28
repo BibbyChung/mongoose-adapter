@@ -1,12 +1,12 @@
 /// <reference path="./../../typings/index.d.ts" />
 
-import {UnitOfWorkBase} from "./unitOfWorkBase";
+import { UnitOfWorkBase } from "./unitOfWorkBase";
 import * as mongoose from "mongoose";
 let mockgoose = require("mockgoose");
 
 export class UnitOfWorkInMemory {
 
-    constructor(private unitOfWork: UnitOfWorkBase) { }
+	constructor(private unitOfWork: UnitOfWorkBase) { }
 
 	add<T extends mongoose.Document>(entity: T) {
 		this.unitOfWork.add(entity);
@@ -38,9 +38,9 @@ export class UnitOfWorkInMemory {
 		});
 		return p;
 
-    }
+	}
 
-    closeAsync() {
+	closeAsync() {
 
 		let p = new Promise<void>((resolve, reject) => {
 
@@ -52,17 +52,17 @@ export class UnitOfWorkInMemory {
 		});
 		return p;
 
-    }
+	}
 
-    resetAsync() {
+	resetAsync() {
 
-        let p = new Promise<void>((resolve, reject) => {
-            mockgoose.reset(() => {
-                resolve();
-            });
-        });
-        return p;
+		let p = new Promise<void>((resolve, reject) => {
+			mockgoose.reset(() => {
+				resolve();
+			});
+		});
+		return p;
 
-    }
+	}
 
 }

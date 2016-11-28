@@ -30,8 +30,8 @@ Implement the BaseRepository for your mongoose collections.
 ```javascript
 
 //myUnitOfWork.ts
-import {UnitOfWorkBase} from "mongoose-adapter";
-import {PersonRep} from "./personRep";
+import { UnitOfWorkBase } from "mongoose-adapter";
+import { PersonRep } from "./personRep";
 
 export class MyUnitOfWork extends UnitOfWorkBase {
 
@@ -47,7 +47,7 @@ export class MyUnitOfWork extends UnitOfWorkBase {
 
 //personRep.ts
 import * as mongoose from "mongoose";
-import {UnitOfWorkBase, RepositoryBase} from "mongoose-adapter";
+import { UnitOfWorkBase, RepositoryBase } from "mongoose-adapter";
 
 export class PersonRep extends RepositoryBase<IPerson> {
 
@@ -102,6 +102,7 @@ await myDb.saveChangeAsync();
 
 //==== update data ====
 let myDb = new UnitOfWork();
+
 let data = await myDb.reps.personRep.getAll()
     .find({ _id: "1qaz2wsx" })
     .exec();
@@ -117,6 +118,7 @@ await myDb.saveChangeAsync();
 
 //==== delete data ====
 let myDb = new UnitOfWork();
+
 let data = await myDb.reps.personRep.getAll()
     .find({ _id: "1qaz2wsx" })
     .exec();
@@ -130,6 +132,7 @@ await myDb.saveChangeAsync();
 
 //==== get data ====
 let myDb = new UnitOfWork();
+
 let data = await myDb.reps.personRep.getAll()
     .find({ _id: "1qaz2wsx" })
     .exec();

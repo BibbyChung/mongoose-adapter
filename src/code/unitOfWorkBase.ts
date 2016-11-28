@@ -1,7 +1,7 @@
 /// <reference path="./../../typings/index.d.ts" />
 
 import * as mongoose from "mongoose";
-import {RepositoryBase} from "./repositoryBase";
+import { RepositoryBase } from "./repositoryBase";
 
 export abstract class UnitOfWorkBase {
 
@@ -99,33 +99,33 @@ export abstract class UnitOfWorkBase {
 
 	}
 
-    connectAsync(connectionString: string) {
+	connectAsync(connectionString: string) {
 
 		(mongoose as any).Promise = global.Promise;
 
-        let p = new Promise<void>((resolve, reject) => {
+		let p = new Promise<void>((resolve, reject) => {
 
-            mongoose.connect(connectionString, {
-                server: {
-                    poolSize: 5
-                }
-            }, (err) => {
+			mongoose.connect(connectionString, {
+				server: {
+					poolSize: 5
+				}
+			}, (err) => {
 
-                if (err) {
-                    reject(err);
-                    return;
-                }
-                //console.log("success to connect the db..")
-                resolve();
+				if (err) {
+					reject(err);
+					return;
+				}
+				//console.log("success to connect the db..")
+				resolve();
 
-            });
+			});
 
-        });
-        return p;
+		});
+		return p;
 
-    }
+	}
 
-    closeAsync() {
+	closeAsync() {
 
 		let p = new Promise<void>((resolve, reject) => {
 			mongoose.disconnect((err) => {
@@ -138,6 +138,6 @@ export abstract class UnitOfWorkBase {
 		});
 		return p;
 
-    }
+	}
 
 }
