@@ -1,6 +1,6 @@
 {
   "name": "mongoose-adapter",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "Make the mongoose to use easily.",
   "main": "./dist/main.js",
   "directories": {
@@ -26,8 +26,8 @@
   },
   "homepage": "https://github.com/BibbyChung/mongoose-adapter#readme",
   "dependencies": {
-    "mongoose": "^4.6.0",
-    "mockgoose": "^6.0.6"
+    "mongoose": "^4.7.0",
+    "mockgoose": "^6.0.8"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
