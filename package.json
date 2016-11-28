@@ -16,7 +16,9 @@
     "url": "git+https://github.com/BibbyChung/mongoose-adapter.git"
   },
   "keywords": [
-    "mongoose"
+    "mongoose",
+    "mongodb",
+    "mongo"
   ],
   "author": "Bibby Chung",
   "bugs": {

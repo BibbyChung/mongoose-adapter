@@ -7,12 +7,12 @@ class RepositoryBase {
         this.initSchemaDefinition();
     }
     initSchemaDefinition() {
-        let documentName = this.getDocumentName();
+        let collectionName = this.getCollectionName();
         try {
-            this._model = mongoose.model(documentName, this.getSchema(), documentName);
+            this._model = mongoose.model(collectionName, this.getSchema(), collectionName);
         }
         catch (ex) {
-            this._model = mongoose.model(documentName, null, documentName);
+            this._model = mongoose.model(collectionName, null, collectionName);
         }
     }
     createNewEntity() {

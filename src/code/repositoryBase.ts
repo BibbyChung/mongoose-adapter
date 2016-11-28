@@ -5,7 +5,7 @@ import {UnitOfWorkBase} from "./unitOfWorkBase";
 
 export abstract class RepositoryBase<T extends mongoose.Document> {
 
-	abstract getDocumentName(): string;
+	abstract getCollectionName(): string;
 
 	abstract getSchema(): mongoose.Schema;
 
@@ -19,11 +19,11 @@ export abstract class RepositoryBase<T extends mongoose.Document> {
 
 	private initSchemaDefinition() {
 
-		let documentName = this.getDocumentName();
+		let collectionName = this.getCollectionName();
 		try {
-			this._model = mongoose.model<T>(documentName, this.getSchema(), documentName);
+			this._model = mongoose.model<T>(collectionName, this.getSchema(), collectionName);
 		} catch (ex) {
-			this._model = mongoose.model<T>(documentName, null, documentName);
+			this._model = mongoose.model<T>(collectionName, null, collectionName);
 		}
 
 	}

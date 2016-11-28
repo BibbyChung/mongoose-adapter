@@ -6,7 +6,7 @@ class PersonRep extends repositoryBase_1.RepositoryBase {
     constructor(unitOfWork) {
         super(unitOfWork);
     }
-    getDocumentName() {
+    getCollectionName() {
         return "Person";
     }
     getSchema() {

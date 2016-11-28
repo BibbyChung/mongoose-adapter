@@ -10,7 +10,7 @@ export class PersonRep extends RepositoryBase<IPerson> {
 		super(unitOfWork);
 	}
 
-	getDocumentName() {
+	getCollectionName() {
 		return "Person";
 	}
 
