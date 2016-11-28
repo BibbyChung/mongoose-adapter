@@ -26,10 +26,11 @@
   },
   "homepage": "https://github.com/BibbyChung/mongoose-adapter#readme",
   "dependencies": {
-    "mongoose": "^4.7.0",
-    "mockgoose": "^6.0.8"
+    "mockgoose": "^6.0.8",
+    "mongoose": "^4.7.0"
   },
   "devDependencies": {
+    "cucumber": "^2.0.0-rc.1",
     "gulp": "^3.9.1",
     "gulp-shell": "^0.5.2",
     "gulp-sourcemaps": "^1.6.0",
