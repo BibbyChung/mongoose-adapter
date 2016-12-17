@@ -11,11 +11,7 @@ export abstract class RepositoryBase<T extends mongoose.Document> {
 
 	private _model: mongoose.Model<T>;
 
-	constructor(private unitOfWork: UnitOfWorkBase) {
-
-		this.initSchemaDefinition();
-
-	}
+	constructor(private unitOfWork: UnitOfWorkBase) { }
 
 	private initSchemaDefinition() {
 
@@ -35,6 +31,9 @@ export abstract class RepositoryBase<T extends mongoose.Document> {
 	}
 
 	getAll(): mongoose.Model<T> {
+
+		if (this._model == undefined)
+			this.initSchemaDefinition();
 
 		return this._model;
 

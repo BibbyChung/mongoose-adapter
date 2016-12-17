@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 class RepositoryBase {
     constructor(unitOfWork) {
         this.unitOfWork = unitOfWork;
-        this.initSchemaDefinition();
     }
     initSchemaDefinition() {
         let collectionName = this.getCollectionName();
@@ -19,6 +18,8 @@ class RepositoryBase {
         return new (this.getAll())(null);
     }
     getAll() {
+        if (this._model == undefined)
+            this.initSchemaDefinition();
         return this._model;
     }
 }
