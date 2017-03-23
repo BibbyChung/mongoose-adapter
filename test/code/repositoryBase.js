@@ -1,5 +1,5 @@
-/// <reference path="./../../typings/index.d.ts" />
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
 class RepositoryBase {
     constructor(unitOfWork) {
@@ -24,4 +24,5 @@ class RepositoryBase {
     }
 }
 exports.RepositoryBase = RepositoryBase;
+
 //# sourceMappingURL=repositoryBase.js.map

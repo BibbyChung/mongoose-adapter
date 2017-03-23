@@ -1,8 +1,0 @@
-{
-	"globalDependencies": {
-		"mongoose": "registry:dt/mongoose#4.5.9+20160826204928",
-		"mongoose-promise": "registry:dt/mongoose-promise#4.5.4+20160822161941",
-		"mpromise": "registry:dt/mpromise#0.5.4+20160316155526",
-		"node": "registry:dt/node#6.0.0+20160915134512"
-	}
-}

@@ -3,6 +3,7 @@
 let gulp = require("gulp");
 let shell = require("gulp-shell");
 let merge = require("merge-stream");
+let merge2 = require('merge2');
 let rimraf = require("rimraf");
 let runSequence = require("run-sequence");
 let through = require('through2');
@@ -16,27 +17,30 @@ let path = require('path');
 let tsCompiler = function (
     pathArr,
     tsconfigPath,
-    sroucemapPostfix,
+    sourceRoot,
     targetPath,
     isUglify) {
 
-    return gulp.src(pathArr)
+    let tsP = ts.createProject(tsconfigPath, { "isolatedModules": false });
+
+    let tsResult = gulp.src(pathArr)
         .pipe(sourcemaps.init())
-        .pipe(ts(ts.createProject(tsconfigPath)))
-        .js
-        //.pipe(uglify())
-        .pipe(sourcemaps.write("./", {
-            includeContent: false,
-            sourceRoot: function (file) {
-                let arr = file.relative.split("/");
-                let prefix = "";
-                for (let i = 0; i < arr.length; i++) {
-                    prefix += "../";
-                }
-                return prefix + sroucemapPostfix;
-            }
-        }))
-        .pipe(gulp.dest(targetPath));
+        .pipe(tsP());
+
+    return merge2([
+        tsResult
+            .js
+            //.pipe(uglify())
+            .pipe(sourcemaps.write("./", {
+                includeContent: false,
+                sourceRoot: sourceRoot,
+            }))
+            .pipe(gulp.dest(targetPath)),
+        tsResult
+            .dts
+            .pipe(gulp.dest(targetPath))
+    ]);
+
 };
 
 let getCopyFilesPipe = (sourcePatten, targetPath) => {
@@ -77,8 +81,8 @@ gulp.task('ts_compile_test', () => {
         [
             "./src/**/*.ts",
         ],
-        "tsconfig_test.json",
-        "src",
+        "tsconfig.test.json",
+        "../src",
         "./test",
         false
     );
@@ -96,8 +100,8 @@ gulp.task('ts_compile_dist', () => {
         [
             "./src/code/**/*.ts",
         ],
-        "tsconfig.json",
-        "src/code",
+        "tsconfig.node.json",
+        "../../src/code",
         "./dist/code",
         false
     );
@@ -107,9 +111,9 @@ gulp.task('ts_compile_dist', () => {
         [
             "./src/main.ts",
         ],
-        "tsconfig.json",
-        "src",
-        "./dist/",
+        "tsconfig.node.json",
+        "../src",
+        "./dist",
         false
     );
     m.add(main);

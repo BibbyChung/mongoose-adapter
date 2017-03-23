@@ -1,4 +1,3 @@
-/// <reference path="./../../typings/index.d.ts" />
 
 import { UnitOfWorkBase } from "./unitOfWorkBase";
 import * as mongoose from "mongoose";

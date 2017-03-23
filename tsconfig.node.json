@@ -6,7 +6,7 @@
         "declaration": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "isolatedModules": false
+        "isolatedModules": true
     },
     "exclude": [
         "node_modules",

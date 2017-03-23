@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const repositoryBase_1 = require("./code/repositoryBase");
 exports.RepositoryBase = repositoryBase_1.RepositoryBase;
 const unitOfWorkBase_1 = require("./code/unitOfWorkBase");

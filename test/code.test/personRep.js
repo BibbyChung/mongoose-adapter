@@ -1,5 +1,5 @@
-/// <reference path="./../../typings/index.d.ts" />
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
 const repositoryBase_1 = require("./../code/repositoryBase");
 class PersonRep extends repositoryBase_1.RepositoryBase {
@@ -21,4 +21,5 @@ class PersonRep extends repositoryBase_1.RepositoryBase {
     }
 }
 exports.PersonRep = PersonRep;
+
 //# sourceMappingURL=personRep.js.map

@@ -1,4 +1,3 @@
-/// <reference path="./../../typings/index.d.ts" />
 
 import { UnitOfWorkBase } from "./../code/unitOfWorkBase";
 import { PersonRep } from "./personRep";
