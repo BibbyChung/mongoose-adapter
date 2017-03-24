@@ -24,5 +24,4 @@ class RepositoryBase {
     }
 }
 exports.RepositoryBase = RepositoryBase;
-
 //# sourceMappingURL=repositoryBase.js.map

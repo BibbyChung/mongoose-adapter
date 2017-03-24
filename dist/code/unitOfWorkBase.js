@@ -107,5 +107,4 @@ class UnitOfWorkBase {
     }
 }
 exports.UnitOfWorkBase = UnitOfWorkBase;
-
 //# sourceMappingURL=unitOfWorkBase.js.map

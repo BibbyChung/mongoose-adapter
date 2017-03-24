@@ -21,5 +21,4 @@ class PersonRep extends repositoryBase_1.RepositoryBase {
     }
 }
 exports.PersonRep = PersonRep;
-
 //# sourceMappingURL=personRep.js.map

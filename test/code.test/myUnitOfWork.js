@@ -11,5 +11,4 @@ class MyUnitOfWork extends unitOfWorkBase_1.UnitOfWorkBase {
     }
 }
 exports.MyUnitOfWork = MyUnitOfWork;
-
 //# sourceMappingURL=myUnitOfWork.js.map

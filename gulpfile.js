@@ -3,7 +3,6 @@
 let gulp = require("gulp");
 let shell = require("gulp-shell");
 let merge = require("merge-stream");
-let merge2 = require('merge2');
 let rimraf = require("rimraf");
 let runSequence = require("run-sequence");
 let through = require('through2');
@@ -19,28 +18,38 @@ let tsCompiler = function (
     tsconfigPath,
     sourceRoot,
     targetPath,
-    isUglify) {
+    isUglify
+) {
 
-    let tsP = ts.createProject(tsconfigPath, { "isolatedModules": false });
+    let tscP = ts.createProject(tsconfigPath);
 
-    let tsResult = gulp.src(pathArr)
+    return gulp.src(pathArr)
         .pipe(sourcemaps.init())
-        .pipe(tsP());
+        .pipe(tscP())
+        .js
+        //.pipe(uglify())
+        .pipe(sourcemaps.write("./", {
+            includeContent: false,
+            sourceRoot: sourceRoot,
+        }))
+        .pipe(gulp.dest(targetPath));
 
-    return merge2([
-        tsResult
-            .js
-            //.pipe(uglify())
-            .pipe(sourcemaps.write("./", {
-                includeContent: false,
-                sourceRoot: sourceRoot,
-            }))
-            .pipe(gulp.dest(targetPath)),
-        tsResult
-            .dts
-            .pipe(gulp.dest(targetPath))
-    ]);
+};
 
+let tsdCompiler = function (
+    pathArr,
+    tsconfigPath,
+    targetPath
+) {
+
+    let tscP = ts.createProject(tsconfigPath, {
+        "isolatedModules": false,
+    });
+
+    return gulp.src(pathArr)
+        .pipe(tscP())
+        .dts
+        .pipe(gulp.dest(targetPath));
 };
 
 let getCopyFilesPipe = (sourcePatten, targetPath) => {
@@ -107,16 +116,22 @@ gulp.task('ts_compile_dist', () => {
     );
     m.add(code);
 
-    let main = tsCompiler(
+    return m;
+
+});
+
+gulp.task('tsd_compile_dist', () => {
+
+    let m = merge();
+
+    let code = tsdCompiler(
         [
-            "./src/main.ts",
+            "./src/code/**/*.ts",
         ],
-        "tsconfig.node.json",
-        "../src",
-        "./dist",
-        false
+        "./tsconfig.node.json",
+        "./dist/code"
     );
-    m.add(main);
+    m.add(code);
 
     return m;
 
@@ -140,11 +155,14 @@ gulp.task('default', (cb) => {
         "clean",
         [
             "ts_compile_test",
-            "ts_compile_dist",
             "copy_feature_to_test",
         ],
         [
             "run_cucumber",
+        ],
+        [
+            "ts_compile_dist",
+            "tsd_compile_dist"
         ],
         cb
     );
