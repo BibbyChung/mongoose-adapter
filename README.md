@@ -10,9 +10,6 @@ Install the components
 $ npm install mongoose-adapter mockgoose mongoose --save
 ```
 
-> **Note:** You have to install [typings](https://github.com/typings/typings) in your global environment.
-
-
 ## Quick Start
 
 You can use TypeScirpt or JavaScript. Up to you.
