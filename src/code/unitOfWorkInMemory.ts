@@ -1,11 +1,17 @@
 
 import { UnitOfWorkBase } from "./unitOfWorkBase";
 import * as mongoose from "mongoose";
-let mockgoose = require("mockgoose");
+import { Mockgoose } from 'mockgoose';
+
+let mockgoose = new Mockgoose(mongoose);
 
 export class UnitOfWorkInMemory {
 
 	constructor(private unitOfWork: UnitOfWorkBase) { }
+
+	static async  initPrepareStorageAsync() {
+		await mockgoose.prepareStorage();
+	}
 
 	add<T extends mongoose.Document>(entity: T) {
 		this.unitOfWork.add(entity);
@@ -20,48 +26,21 @@ export class UnitOfWorkInMemory {
 	}
 
 	saveChangeAsync() {
-
 		return this.unitOfWork.saveChangeAsync();
-
 	}
 
-	connectAsync() {
-
-		let p = new Promise<void>((resolve, reject) => {
-
-			mockgoose(mongoose).then(async () => {
-				await this.unitOfWork.connectAsync("xxx");
-				resolve();
-			});
-
-		});
-		return p;
-
+	async connectAsync() {
+		await mockgoose.prepareStorage();
+		await this.unitOfWork.connectAsync("xxx");
 	}
 
-	closeAsync() {
-
-		let p = new Promise<void>((resolve, reject) => {
-
-			mockgoose.reset(async () => {
-				await this.unitOfWork.closeAsync();
-				resolve();
-			});
-
-		});
-		return p;
-
+	async	closeAsync() {
+		await mockgoose.helper.reset();
+		await this.unitOfWork.closeAsync();
 	}
 
-	resetAsync() {
-
-		let p = new Promise<void>((resolve, reject) => {
-			mockgoose.reset(() => {
-				resolve();
-			});
-		});
-		return p;
-
+	async resetAsync() {
+		await mockgoose.helper.reset();
 	}
 
 }

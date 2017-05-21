@@ -9,10 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
-let mockgoose = require("mockgoose");
+const mockgoose_1 = require("mockgoose");
+let mockgoose = new mockgoose_1.Mockgoose(mongoose);
 class UnitOfWorkInMemory {
     constructor(unitOfWork) {
         this.unitOfWork = unitOfWork;
+    }
+    static initPrepareStorageAsync() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield mockgoose.prepareStorage();
+        });
     }
     add(entity) {
         this.unitOfWork.add(entity);
@@ -27,30 +33,21 @@ class UnitOfWorkInMemory {
         return this.unitOfWork.saveChangeAsync();
     }
     connectAsync() {
-        let p = new Promise((resolve, reject) => {
-            mockgoose(mongoose).then(() => __awaiter(this, void 0, void 0, function* () {
-                yield this.unitOfWork.connectAsync("xxx");
-                resolve();
-            }));
+        return __awaiter(this, void 0, void 0, function* () {
+            yield mockgoose.prepareStorage();
+            yield this.unitOfWork.connectAsync("xxx");
         });
-        return p;
     }
     closeAsync() {
-        let p = new Promise((resolve, reject) => {
-            mockgoose.reset(() => __awaiter(this, void 0, void 0, function* () {
-                yield this.unitOfWork.closeAsync();
-                resolve();
-            }));
+        return __awaiter(this, void 0, void 0, function* () {
+            yield mockgoose.helper.reset();
+            yield this.unitOfWork.closeAsync();
         });
-        return p;
     }
     resetAsync() {
-        let p = new Promise((resolve, reject) => {
-            mockgoose.reset(() => {
-                resolve();
-            });
+        return __awaiter(this, void 0, void 0, function* () {
+            yield mockgoose.helper.reset();
         });
-        return p;
     }
 }
 exports.UnitOfWorkInMemory = UnitOfWorkInMemory;

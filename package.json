@@ -27,8 +27,8 @@
   "homepage": "https://github.com/BibbyChung/mongoose-adapter#readme",
   "dependencies": {
 
-    "mockgoose": "^6.0.8",
-    "mongoose": "^4.9.1"
+    "mockgoose": "^7.3.1",
+    "mongoose": "^4.10.0"
 
   },
   "devDependencies": {
@@ -46,7 +46,9 @@
     "merge2": "^1.0.3",
     "rimraf": "^2.6.1",
     "run-sequence": "^1.2.2",
-    "through2": "^2.0.3"
+    "through2": "^2.0.3",
+    "tslint": "^5.2.0",
+    "tslint-config-airbnb": "^5.0.1"
 
   }
 }
