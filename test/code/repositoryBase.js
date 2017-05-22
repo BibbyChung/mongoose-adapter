@@ -6,21 +6,21 @@ class RepositoryBase {
         this.unitOfWork = unitOfWork;
     }
     initSchemaDefinition() {
-        let collectionName = this.getCollectionName();
+        const collectionName = this.getCollectionName();
         try {
-            this._model = mongoose.model(collectionName, this.getSchema(), collectionName);
+            this.model = mongoose.model(collectionName, this.getSchema(), collectionName);
         }
         catch (ex) {
-            this._model = mongoose.model(collectionName, null, collectionName);
+            this.model = mongoose.model(collectionName, null, collectionName);
         }
     }
     createNewEntity() {
         return new (this.getAll())(null);
     }
     getAll() {
-        if (this._model == undefined)
+        if (this.model === undefined)
             this.initSchemaDefinition();
-        return this._model;
+        return this.model;
     }
 }
 exports.RepositoryBase = RepositoryBase;

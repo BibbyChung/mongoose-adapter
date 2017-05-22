@@ -1,15 +1,14 @@
-
-import { UnitOfWorkBase } from "./../code/unitOfWorkBase";
-import { PersonRep } from "./personRep";
+import { UnitOfWorkBase } from './../code/unitOfWorkBase';
+import { PersonRep } from './personRep';
 
 export class MyUnitOfWork extends UnitOfWorkBase {
 
-    constructor() {
-        super();
-    }
+  constructor() {
+    super();
+  }
 
-    reps = {
-        personRep: new PersonRep(this)
-    };
+  reps = {
+    personRep: new PersonRep(this),
+  };
 
 }

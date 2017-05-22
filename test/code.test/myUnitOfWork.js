@@ -6,7 +6,7 @@ class MyUnitOfWork extends unitOfWorkBase_1.UnitOfWorkBase {
     constructor() {
         super();
         this.reps = {
-            personRep: new personRep_1.PersonRep(this)
+            personRep: new personRep_1.PersonRep(this),
         };
     }
 }

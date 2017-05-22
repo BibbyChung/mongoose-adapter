@@ -1,36 +1,36 @@
 
-import * as mongoose from "mongoose";
-import { UnitOfWorkBase } from "./../code/unitOfWorkBase";
-import { RepositoryBase } from "./../code/repositoryBase";
+import * as mongoose from 'mongoose';
+import { UnitOfWorkBase } from './../code/unitOfWorkBase';
+import { RepositoryBase } from './../code/repositoryBase';
 
 export class PersonRep extends RepositoryBase<IPerson> {
 
-	constructor(unitOfWork: UnitOfWorkBase) {
-		super(unitOfWork);
-	}
+  constructor(unitOfWork: UnitOfWorkBase) {
+    super(unitOfWork);
+  }
 
-	getCollectionName() {
-		return "Person";
-	}
+  getCollectionName() {
+    return 'Person';
+  }
 
-	getSchema(): mongoose.Schema {
+  getSchema(): mongoose.Schema {
 
-		let userSchema = {
-			_id: { type: String, index: { unique: true } },
-			name: { type: String },
-			age: { type: Number },
-			birthday: { type: Date }
-		};
-		let s = new mongoose.Schema(userSchema);
-		return s;
+    const userSchema = {
+      _id: { type: String, index: { unique: true } },
+      name: { type: String },
+      age: { type: Number },
+      birthday: { type: Date },
+    };
+    const s = new mongoose.Schema(userSchema);
+    return s;
 
-	}
+  }
 
 }
 
 export interface IPerson extends mongoose.Document {
-	_id: string;
-	name: string,
-	age: number,
-	birthday: Date
+  _id: string;
+  name: string;
+  age: number;
+  birthday: Date;
 }

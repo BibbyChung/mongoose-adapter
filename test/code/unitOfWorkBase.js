@@ -25,9 +25,9 @@ class UnitOfWorkBase {
         this.updateArr.push(entity);
     }
     saveChangeAsync() {
-        let promiseArr = [];
+        const promiseArr = [];
         this.addArr.forEach((a) => {
-            let p = new Promise((resolve, reject) => {
+            const p = new Promise((resolve, reject) => {
                 a.save((err) => {
                     if (err) {
                         reject(err);
@@ -39,7 +39,7 @@ class UnitOfWorkBase {
             promiseArr.push(p);
         });
         this.removeArr.forEach((a) => {
-            let p = new Promise((resolve, reject) => {
+            const p = new Promise((resolve, reject) => {
                 a.remove((err) => {
                     if (err) {
                         reject(err);
@@ -51,7 +51,7 @@ class UnitOfWorkBase {
             promiseArr.push(p);
         });
         this.updateArr.forEach((a) => {
-            let p = new Promise((resolve, reject) => {
+            const p = new Promise((resolve, reject) => {
                 a.save((err) => {
                     if (err) {
                         reject(err);
@@ -62,9 +62,9 @@ class UnitOfWorkBase {
             });
             promiseArr.push(p);
         });
-        let p = new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+        const p = new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             try {
-                for (let item of promiseArr) {
+                for (const item of promiseArr) {
                     yield item;
                 }
                 resolve();
@@ -77,24 +77,24 @@ class UnitOfWorkBase {
     }
     connectAsync(connectionString) {
         mongoose.Promise = global.Promise;
-        let p = new Promise((resolve, reject) => {
+        const p = new Promise((resolve, reject) => {
             mongoose.connect(connectionString, {
                 server: {
-                    poolSize: 5
-                }
+                    poolSize: 5,
+                },
             }, (err) => {
                 if (err) {
                     reject(err);
                     return;
                 }
-                //console.log("success to connect the db..")
+                // console.log("success to connect the db..")
                 resolve();
             });
         });
         return p;
     }
     closeAsync() {
-        let p = new Promise((resolve, reject) => {
+        const p = new Promise((resolve, reject) => {
             mongoose.disconnect((err) => {
                 if (err) {
                     reject(err);

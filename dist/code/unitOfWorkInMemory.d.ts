@@ -1,6 +1,6 @@
 /// <reference types="mongoose" />
-import { UnitOfWorkBase } from "./unitOfWorkBase";
-import * as mongoose from "mongoose";
+import { UnitOfWorkBase } from './unitOfWorkBase';
+import * as mongoose from 'mongoose';
 export declare class UnitOfWorkInMemory {
     private unitOfWork;
     constructor(unitOfWork: UnitOfWorkBase);

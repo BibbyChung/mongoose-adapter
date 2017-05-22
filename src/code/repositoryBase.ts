@@ -1,42 +1,42 @@
 
-import * as mongoose from "mongoose";
-import { UnitOfWorkBase } from "./unitOfWorkBase";
+import * as mongoose from 'mongoose';
+import { UnitOfWorkBase } from './unitOfWorkBase';
 
 export abstract class RepositoryBase<T extends mongoose.Document> {
 
-	abstract getCollectionName(): string;
+  abstract getCollectionName(): string;
 
-	abstract getSchema(): mongoose.Schema;
+  abstract getSchema(): mongoose.Schema;
 
-	private _model: mongoose.Model<T>;
+  private model: mongoose.Model<T>;
 
-	constructor(private unitOfWork: UnitOfWorkBase) { }
+  constructor(private unitOfWork: UnitOfWorkBase) { }
 
-	private initSchemaDefinition() {
+  private initSchemaDefinition() {
 
-		let collectionName = this.getCollectionName();
-		try {
-			this._model = mongoose.model<T>(collectionName, this.getSchema(), collectionName);
-		} catch (ex) {
-			this._model = mongoose.model<T>(collectionName, null, collectionName);
-		}
+    const collectionName = this.getCollectionName();
+    try {
+      this.model = mongoose.model<T>(collectionName, this.getSchema(), collectionName);
+    } catch (ex) {
+      this.model = mongoose.model<T>(collectionName, null, collectionName);
+    }
 
-	}
+  }
 
-	createNewEntity(): T {
+  createNewEntity(): T {
 
-		return new (this.getAll())(null);
+    return new (this.getAll())(null);
 
-	}
+  }
 
-	getAll(): mongoose.Model<T> {
+  getAll(): mongoose.Model<T> {
 
-		if (this._model == undefined)
-			this.initSchemaDefinition();
+    if (this.model === undefined)
+      this.initSchemaDefinition();
 
-		return this._model;
+    return this.model;
 
-	}
+  }
 
 }
 

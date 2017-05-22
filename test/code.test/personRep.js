@@ -7,16 +7,16 @@ class PersonRep extends repositoryBase_1.RepositoryBase {
         super(unitOfWork);
     }
     getCollectionName() {
-        return "Person";
+        return 'Person';
     }
     getSchema() {
-        let userSchema = {
+        const userSchema = {
             _id: { type: String, index: { unique: true } },
             name: { type: String },
             age: { type: Number },
-            birthday: { type: Date }
+            birthday: { type: Date },
         };
-        let s = new mongoose.Schema(userSchema);
+        const s = new mongoose.Schema(userSchema);
         return s;
     }
 }

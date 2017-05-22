@@ -1,142 +1,141 @@
-
-import * as mongoose from "mongoose";
-import { RepositoryBase } from "./repositoryBase";
+import * as mongoose from 'mongoose';
+import { RepositoryBase } from './repositoryBase';
 
 export abstract class UnitOfWorkBase {
 
-	private addArr: mongoose.Document[] = [];
-	private removeArr: mongoose.Document[] = [];
-	private updateArr: mongoose.Document[] = [];
+  private addArr: mongoose.Document[] = [];
+  private removeArr: mongoose.Document[] = [];
+  private updateArr: mongoose.Document[] = [];
 
-	add<T extends mongoose.Document>(entity: T) {
-		this.addArr.push(entity);
-	}
+  add<T extends mongoose.Document>(entity: T) {
+    this.addArr.push(entity);
+  }
 
-	remove<T extends mongoose.Document>(entity: T) {
-		this.removeArr.push(entity);
-	}
+  remove<T extends mongoose.Document>(entity: T) {
+    this.removeArr.push(entity);
+  }
 
-	update<T extends mongoose.Document>(entity: T) {
-		this.updateArr.push(entity);
-	}
+  update<T extends mongoose.Document>(entity: T) {
+    this.updateArr.push(entity);
+  }
 
-	saveChangeAsync() {
+  saveChangeAsync() {
 
-		let promiseArr: Promise<void>[] = [];
+    const promiseArr: Promise<void>[] = [];
 
-		this.addArr.forEach((a: any) => {
+    this.addArr.forEach((a: any) => {
 
-			let p = new Promise<void>((resolve, reject) => {
+      const p = new Promise<void>((resolve, reject) => {
 
-				a.save((err) => {
-					if (err) {
-						reject(err);
-						return;
-					}
-					resolve();
-				});
+        a.save((err) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+          resolve();
+        });
 
-			});
+      });
 
-			promiseArr.push(p);
+      promiseArr.push(p);
 
-		});
+    });
 
-		this.removeArr.forEach((a: any) => {
+    this.removeArr.forEach((a: any) => {
 
-			let p = new Promise<void>((resolve, reject) => {
+      const p = new Promise<void>((resolve, reject) => {
 
-				a.remove((err) => {
-					if (err) {
-						reject(err);
-						return;
-					}
-					resolve();
-				});
+        a.remove((err) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+          resolve();
+        });
 
-			});
+      });
 
-			promiseArr.push(p);
+      promiseArr.push(p);
 
-		});
+    });
 
-		this.updateArr.forEach((a: any) => {
+    this.updateArr.forEach((a: any) => {
 
-			let p = new Promise<void>((resolve, reject) => {
+      const p = new Promise<void>((resolve, reject) => {
 
-				a.save((err) => {
-					if (err) {
-						reject(err);
-						return;
-					}
-					resolve();
-				});
+        a.save((err) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+          resolve();
+        });
 
-			});
+      });
 
-			promiseArr.push(p);
+      promiseArr.push(p);
 
-		});
+    });
 
-		let p = new Promise<void>(async (resolve, reject) => {
+    const p = new Promise<void>(async (resolve, reject) => {
 
-			try {
+      try {
 
-				for (let item of promiseArr) {
-					await item;
-				}
-				resolve();
+        for (const item of promiseArr) {
+          await item;
+        }
+        resolve();
 
-			} catch (err) {
+      } catch (err) {
 
-				reject(err);
+        reject(err);
 
-			}
+      }
 
-		});
-		return p;
+    });
+    return p;
 
-	}
+  }
 
-	connectAsync(connectionString: string) {
+  connectAsync(connectionString: string) {
 
-		(mongoose as any).Promise = global.Promise;
+    (mongoose as any).Promise = global.Promise;
 
-		let p = new Promise<void>((resolve, reject) => {
+    const p = new Promise<void>((resolve, reject) => {
 
-			mongoose.connect(connectionString, {
-				server: {
-					poolSize: 5
-				}
-			}, (err) => {
+      mongoose.connect(connectionString, {
+        server: {
+          poolSize: 5,
+        },
+      // tslint:disable-next-line:align
+      }, (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        // console.log("success to connect the db..")
+        resolve();
 
-				if (err) {
-					reject(err);
-					return;
-				}
-				//console.log("success to connect the db..")
-				resolve();
+      });
 
-			});
+    });
+    return p;
 
-		});
-		return p;
+  }
 
-	}
+  closeAsync() {
 
-	closeAsync() {
+    const p = new Promise<void>((resolve, reject) => {
+      mongoose.disconnect((err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve();
+      });
+    });
+    return p;
 
-		let p = new Promise<void>((resolve, reject) => {
-			mongoose.disconnect((err) => {
-				if (err) {
-					reject(err);
-					return;
-				}
-				resolve();
-			});
-		});
-		return p;
-
-	}
+  }
 
 }

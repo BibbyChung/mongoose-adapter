@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
 const mockgoose_1 = require("mockgoose");
-let mockgoose = new mockgoose_1.Mockgoose(mongoose);
+const mockgoose = new mockgoose_1.Mockgoose(mongoose);
 class UnitOfWorkInMemory {
     constructor(unitOfWork) {
         this.unitOfWork = unitOfWork;
@@ -35,7 +35,7 @@ class UnitOfWorkInMemory {
     connectAsync() {
         return __awaiter(this, void 0, void 0, function* () {
             yield mockgoose.prepareStorage();
-            yield this.unitOfWork.connectAsync("xxx");
+            yield this.unitOfWork.connectAsync('xxx');
         });
     }
     closeAsync() {
