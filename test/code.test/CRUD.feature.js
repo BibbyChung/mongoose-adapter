@@ -13,7 +13,7 @@ const unitOfWorkInMemory_1 = require("./../code/unitOfWorkInMemory");
 let myDb;
 let myDbInMemory;
 const prepareToRun = (self, tag) => {
-    self.Before({ tags: [tag] }, (scenario) => __awaiter(this, void 0, void 0, function* () {
+    self.Before({ tags: [tag], timeout: 3600 * 1000 }, (scenario) => __awaiter(this, void 0, void 0, function* () {
         myDb = new myUnitOfWork_1.MyUnitOfWork();
         myDbInMemory = new unitOfWorkInMemory_1.UnitOfWorkInMemory(myDb);
         yield myDbInMemory.connectAsync();

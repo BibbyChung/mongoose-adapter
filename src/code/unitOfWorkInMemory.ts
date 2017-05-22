@@ -9,10 +9,6 @@ export class UnitOfWorkInMemory {
 
   constructor(private unitOfWork: UnitOfWorkBase) { }
 
-  static async  initPrepareStorageAsync() {
-    await mockgoose.prepareStorage();
-  }
-
   add<T extends mongoose.Document>(entity: T) {
     this.unitOfWork.add(entity);
   }

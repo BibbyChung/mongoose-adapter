@@ -8,7 +8,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "cucumber.js test/**/*.feature --format pretty"
+    "test": "gulp"
   },
   "license": "MIT",
   "repository": {

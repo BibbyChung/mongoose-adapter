@@ -15,11 +15,6 @@ class UnitOfWorkInMemory {
     constructor(unitOfWork) {
         this.unitOfWork = unitOfWork;
     }
-    static initPrepareStorageAsync() {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield mockgoose.prepareStorage();
-        });
-    }
     add(entity) {
         this.unitOfWork.add(entity);
     }

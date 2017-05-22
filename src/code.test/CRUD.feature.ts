@@ -7,7 +7,7 @@ import { PersonRep, IPerson } from './personRep';
 let myDb: MyUnitOfWork;
 let myDbInMemory: UnitOfWorkInMemory;
 const prepareToRun = (self, tag: string) => {
-  self.Before({ tags: [tag] }, async (scenario: any) => {
+  self.Before({ tags: [tag], timeout: 3600 * 1000 }, async (scenario: any) => {
 
     myDb = new MyUnitOfWork();
     myDbInMemory = new UnitOfWorkInMemory(myDb);
