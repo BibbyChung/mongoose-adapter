@@ -1,4 +1,3 @@
-
 import * as mongoose from 'mongoose';
 import { UnitOfWorkBase } from './../code/unitOfWorkBase';
 import { RepositoryBase } from './../code/repositoryBase';

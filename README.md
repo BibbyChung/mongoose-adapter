@@ -22,17 +22,17 @@ Implement the BaseRepository for your mongoose collections.
 
 //myUnitOfWork.ts
 import { UnitOfWorkBase } from "mongoose-adapter";
-import { PersonRep } from "./personRep";
+import { PersonRep } from './personRep';
 
 export class MyUnitOfWork extends UnitOfWorkBase {
 
-    constructor() {
-        super();
-    }
+  constructor() {
+    super();
+  }
 
-    reps = {
-        personRep: new PersonRep(this)
-    };
+  reps = {
+    personRep: new PersonRep(this),
+  };
 
 }
 
@@ -42,34 +42,34 @@ import { UnitOfWorkBase, RepositoryBase } from "mongoose-adapter";
 
 export class PersonRep extends RepositoryBase<IPerson> {
 
-	constructor(unitOfWork: UnitOfWorkBase) {
-		super(unitOfWork);
-	}
+  constructor(unitOfWork: UnitOfWorkBase) {
+    super(unitOfWork);
+  }
 
-	getCollectionName() {
-		return "Person";
-	}
+  getCollectionName() {
+    return 'Person';
+  }
 
-	getSchema(): mongoose.Schema {
+  getSchema(): mongoose.Schema {
 
-		let userSchema = {
-			_id: { type: String, index: { unique: true } },
-			name: { type: String },
-			age: { type: Number },
-			birthday: { type: Date }
-		};
-		let s = new mongoose.Schema(userSchema);
-		return s;
+    const userSchema = {
+      _id: { type: String, index: { unique: true } },
+      name: { type: String },
+      age: { type: Number },
+      birthday: { type: Date },
+    };
+    const s = new mongoose.Schema(userSchema);
+    return s;
 
-	}
+  }
 
 }
 
 export interface IPerson extends mongoose.Document {
-	_id: string;
-	name: string,
-	age: number,
-	birthday: Date
+  _id: string;
+  name: string;
+  age: number;
+  birthday: Date;
 }
 
 
@@ -115,7 +115,7 @@ let data = await myDb.reps.personRep.getAll()
     .exec();
 
 for (let item of data) {
-    myDb.remove(item);
+  myDb.remove(item);
 }
 
 await myDb.saveChangeAsync();
@@ -134,3 +134,4 @@ let data = await myDb.reps.personRep.getAll()
 (later..)
 
 ## Todo
+- add the transacation
