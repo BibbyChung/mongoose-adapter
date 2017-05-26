@@ -24,7 +24,7 @@ class UnitOfWorkBase {
     update(entity) {
         this.updateArr.push(entity);
     }
-    saveChangeAsync() {
+    saveChange() {
         const promiseArr = [];
         this.addArr.forEach((a) => {
             const p = new Promise((resolve, reject) => {
@@ -75,7 +75,7 @@ class UnitOfWorkBase {
         }));
         return p;
     }
-    connectAsync(connectionString) {
+    connect(connectionString) {
         mongoose.Promise = global.Promise;
         const p = new Promise((resolve, reject) => {
             mongoose.connect(connectionString, {
@@ -93,7 +93,7 @@ class UnitOfWorkBase {
         });
         return p;
     }
-    closeAsync() {
+    close() {
         const p = new Promise((resolve, reject) => {
             mongoose.disconnect((err) => {
                 if (err) {

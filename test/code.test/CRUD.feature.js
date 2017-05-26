@@ -16,16 +16,16 @@ const prepareToRun = (self, tag) => {
     self.Before({ tags: [tag], timeout: 3600 * 1000 }, (scenario) => __awaiter(this, void 0, void 0, function* () {
         myDb = new myUnitOfWork_1.MyUnitOfWork();
         myDbInMemory = new unitOfWorkInMemory_1.UnitOfWorkInMemory(myDb);
-        yield myDbInMemory.connectAsync();
+        yield myDbInMemory.connect();
     }));
     self.After({ tags: [tag] }, (scenario) => __awaiter(this, void 0, void 0, function* () {
-        yield myDbInMemory.closeAsync();
+        yield myDbInMemory.close();
     }));
 };
 module.exports = function () {
     prepareToRun(this, '@abcd');
     this.Given(/^The database is empty\.$/, () => __awaiter(this, void 0, void 0, function* () {
-        yield myDbInMemory.resetAsync();
+        yield myDbInMemory.reset();
     }));
     this.When(/^Execute the method of create\.$/, (table) => __awaiter(this, void 0, void 0, function* () {
         const arr = table.hashes();
@@ -37,10 +37,10 @@ module.exports = function () {
             entity.birthday = item.birthday;
             myDb.add(entity);
         }
-        yield myDb.saveChangeAsync();
+        yield myDb.saveChange();
     }));
     this.Given(/^The database has a record\.$/, (table) => __awaiter(this, void 0, void 0, function* () {
-        yield myDbInMemory.resetAsync();
+        yield myDbInMemory.reset();
         const arr = table.hashes();
         for (const item of arr) {
             const entity = myDb.reps.personRep.createNewEntity();
@@ -50,7 +50,7 @@ module.exports = function () {
             entity.birthday = item.birthday;
             myDb.add(entity);
         }
-        yield myDb.saveChangeAsync();
+        yield myDb.saveChange();
     }));
     this.When(/^Execute the method of delete\.$/, () => __awaiter(this, void 0, void 0, function* () {
         const data = yield myDb.reps.personRep.getAll()
@@ -59,7 +59,7 @@ module.exports = function () {
         for (const item of data) {
             myDb.remove(item);
         }
-        yield myDb.saveChangeAsync();
+        yield myDb.saveChange();
     }));
     this.Then(/^The result of database is empty\.$/, () => __awaiter(this, void 0, void 0, function* () {
         const data = yield myDb.reps.personRep.getAll()
@@ -76,7 +76,7 @@ module.exports = function () {
         data[0].age = arr[0].age;
         data[0].birthday = arr[0].birthday;
         myDb.update(data[0]);
-        yield myDb.saveChangeAsync();
+        yield myDb.saveChange();
     }));
     this.Then(/^The result of database has a record\.$/, (table) => __awaiter(this, void 0, void 0, function* () {
         const arr = table.hashes();

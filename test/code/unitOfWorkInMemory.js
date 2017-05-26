@@ -24,22 +24,22 @@ class UnitOfWorkInMemory {
     update(entity) {
         this.unitOfWork.update(entity);
     }
-    saveChangeAsync() {
-        return this.unitOfWork.saveChangeAsync();
+    saveChange() {
+        return this.unitOfWork.saveChange();
     }
-    connectAsync() {
+    connect() {
         return __awaiter(this, void 0, void 0, function* () {
             yield mockgoose.prepareStorage();
-            yield this.unitOfWork.connectAsync('xxx');
+            yield this.unitOfWork.connect('xxx');
         });
     }
-    closeAsync() {
+    close() {
         return __awaiter(this, void 0, void 0, function* () {
             yield mockgoose.helper.reset();
-            yield this.unitOfWork.closeAsync();
+            yield this.unitOfWork.close();
         });
     }
-    resetAsync() {
+    reset() {
         return __awaiter(this, void 0, void 0, function* () {
             yield mockgoose.helper.reset();
         });

@@ -19,12 +19,9 @@ export abstract class UnitOfWorkBase {
     this.updateArr.push(entity);
   }
 
-  saveChangeAsync() {
-
+  saveChange() {
     const promiseArr: Promise<void>[] = [];
-
     this.addArr.forEach((a: any) => {
-
       const p = new Promise<void>((resolve, reject) => {
 
         a.save((err) => {
@@ -38,11 +35,9 @@ export abstract class UnitOfWorkBase {
       });
 
       promiseArr.push(p);
-
     });
 
     this.removeArr.forEach((a: any) => {
-
       const p = new Promise<void>((resolve, reject) => {
 
         a.remove((err) => {
@@ -56,11 +51,9 @@ export abstract class UnitOfWorkBase {
       });
 
       promiseArr.push(p);
-
     });
 
     this.updateArr.forEach((a: any) => {
-
       const p = new Promise<void>((resolve, reject) => {
 
         a.save((err) => {
@@ -74,31 +67,25 @@ export abstract class UnitOfWorkBase {
       });
 
       promiseArr.push(p);
-
     });
 
     const p = new Promise<void>(async (resolve, reject) => {
 
       try {
-
         for (const item of promiseArr) {
           await item;
         }
         resolve();
-
       } catch (err) {
-
         reject(err);
-
       }
 
     });
-    return p;
 
+    return p;
   }
 
-  connectAsync(connectionString: string) {
-
+  connect(connectionString: string) {
     (mongoose as any).Promise = global.Promise;
 
     const p = new Promise<void>((resolve, reject) => {
@@ -107,7 +94,7 @@ export abstract class UnitOfWorkBase {
         server: {
           poolSize: 5,
         },
-      // tslint:disable-next-line:align
+        // tslint:disable-next-line:align
       }, (err) => {
         if (err) {
           reject(err);
@@ -115,17 +102,15 @@ export abstract class UnitOfWorkBase {
         }
         // console.log("success to connect the db..")
         resolve();
-
       });
-
     });
-    return p;
 
+    return p;
   }
 
-  closeAsync() {
-
+  close() {
     const p = new Promise<void>((resolve, reject) => {
+
       mongoose.disconnect((err) => {
         if (err) {
           reject(err);
@@ -134,8 +119,8 @@ export abstract class UnitOfWorkBase {
         resolve();
       });
     });
-    return p;
 
+    return p;
   }
 
 }

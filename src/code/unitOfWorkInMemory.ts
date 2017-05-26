@@ -21,21 +21,21 @@ export class UnitOfWorkInMemory {
     this.unitOfWork.update(entity);
   }
 
-  saveChangeAsync() {
-    return this.unitOfWork.saveChangeAsync();
+  saveChange() {
+    return this.unitOfWork.saveChange();
   }
 
-  async connectAsync() {
+  async connect() {
     await mockgoose.prepareStorage();
-    await this.unitOfWork.connectAsync('xxx');
+    await this.unitOfWork.connect('xxx');
   }
 
-  async	closeAsync() {
+  async	close() {
     await mockgoose.helper.reset();
-    await this.unitOfWork.closeAsync();
+    await this.unitOfWork.close();
   }
 
-  async resetAsync() {
+  async reset() {
     await mockgoose.helper.reset();
   }
 

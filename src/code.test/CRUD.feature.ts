@@ -11,12 +11,12 @@ const prepareToRun = (self, tag: string) => {
 
     myDb = new MyUnitOfWork();
     myDbInMemory = new UnitOfWorkInMemory(myDb);
-    await myDbInMemory.connectAsync();
+    await myDbInMemory.connect();
 
   });
   self.After({ tags: [tag] }, async (scenario) => {
 
-    await myDbInMemory.closeAsync();
+    await myDbInMemory.close();
 
   });
 };
@@ -27,7 +27,7 @@ export = function () {
 
   this.Given(/^The database is empty\.$/, async () => {
 
-    await myDbInMemory.resetAsync();
+    await myDbInMemory.reset();
 
   });
 
@@ -46,13 +46,13 @@ export = function () {
 
     }
 
-    await myDb.saveChangeAsync();
+    await myDb.saveChange();
 
   });
 
   this.Given(/^The database has a record\.$/, async (table) => {
 
-    await myDbInMemory.resetAsync();
+    await myDbInMemory.reset();
 
     const arr: IPerson[] = table.hashes();
 
@@ -67,7 +67,7 @@ export = function () {
 
     }
 
-    await myDb.saveChangeAsync();
+    await myDb.saveChange();
 
   });
 
@@ -81,7 +81,7 @@ export = function () {
       myDb.remove(item);
     }
 
-    await myDb.saveChangeAsync();
+    await myDb.saveChange();
 
   });
 
@@ -108,7 +108,7 @@ export = function () {
     data[0].birthday = arr[0].birthday;
     myDb.update(data[0]);
 
-    await myDb.saveChangeAsync();
+    await myDb.saveChange();
 
   });
 

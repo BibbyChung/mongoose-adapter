@@ -7,8 +7,8 @@ export declare class UnitOfWorkInMemory {
     add<T extends mongoose.Document>(entity: T): void;
     remove<T extends mongoose.Document>(entity: T): void;
     update<T extends mongoose.Document>(entity: T): void;
-    saveChangeAsync(): Promise<void>;
-    connectAsync(): Promise<void>;
-    closeAsync(): Promise<void>;
-    resetAsync(): Promise<void>;
+    saveChange(): Promise<void>;
+    connect(): Promise<void>;
+    close(): Promise<void>;
+    reset(): Promise<void>;
 }
