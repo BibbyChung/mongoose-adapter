@@ -1,6 +1,6 @@
 {
   "name": "mongoose-adapter",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "Make the mongoose easy to use.",
   "main": "./dist/code/_index.js",
   "types": "./dist/code/_index.d.ts",
