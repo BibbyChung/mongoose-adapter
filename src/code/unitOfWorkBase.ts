@@ -1,7 +1,12 @@
 import * as mongoose from 'mongoose';
 import { RepositoryBase } from './repositoryBase';
+import { Mockgoose } from 'mockgoose';
+
+const mockgoose = new Mockgoose(mongoose);
 
 export abstract class UnitOfWorkBase {
+
+  isInMemory = false;
 
   private addArr: mongoose.Document[] = [];
   private removeArr: mongoose.Document[] = [];
@@ -85,12 +90,17 @@ export abstract class UnitOfWorkBase {
     return p;
   }
 
-  connect(connectionString: string) {
+  async connect(connectionString: string) {
     (mongoose as any).Promise = global.Promise;
+    let conString = connectionString;
 
-    const p = new Promise<void>((resolve, reject) => {
+    if (this.isInMemory) {
+      conString = 'xxx';
+      await mockgoose.prepareStorage();
+    }
 
-      mongoose.connect(connectionString, {
+    await new Promise<void>((resolve, reject) => {
+      mongoose.connect(conString, {
         server: {
           poolSize: 5,
         },
@@ -104,12 +114,14 @@ export abstract class UnitOfWorkBase {
         resolve();
       });
     });
-
-    return p;
   }
 
-  close() {
-    const p = new Promise<void>((resolve, reject) => {
+  async close() {
+
+    if (this.isInMemory)
+      await mockgoose.helper.reset();
+      
+    await new Promise<void>((resolve, reject) => {
 
       mongoose.disconnect((err) => {
         if (err) {
@@ -118,9 +130,18 @@ export abstract class UnitOfWorkBase {
         }
         resolve();
       });
+
     });
 
-    return p;
+  }
+
+  async reset() {
+
+    if (!this.isInMemory)
+      throw new Error('please set the property "isInMemory" to true');
+
+    await mockgoose.helper.reset();
+
   }
 
 }

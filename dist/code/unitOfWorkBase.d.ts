@@ -1,6 +1,7 @@
 /// <reference types="mongoose" />
 import * as mongoose from 'mongoose';
 export declare abstract class UnitOfWorkBase {
+    isInMemory: boolean;
     private addArr;
     private removeArr;
     private updateArr;
@@ -10,4 +11,5 @@ export declare abstract class UnitOfWorkBase {
     saveChange(): Promise<void>;
     connect(connectionString: string): Promise<void>;
     close(): Promise<void>;
+    reset(): Promise<void>;
 }

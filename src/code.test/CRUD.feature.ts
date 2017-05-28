@@ -1,22 +1,19 @@
-
 import * as assert from 'assert';
 import { MyUnitOfWork } from './myUnitOfWork';
-import { UnitOfWorkInMemory } from './../code/unitOfWorkInMemory';
 import { PersonRep, IPerson } from './personRep';
 
-let myDb: MyUnitOfWork;
-let myDbInMemory: UnitOfWorkInMemory;
+let myDB: MyUnitOfWork;
 const prepareToRun = (self, tag: string) => {
   self.Before({ tags: [tag], timeout: 3600 * 1000 }, async (scenario: any) => {
 
-    myDb = new MyUnitOfWork();
-    myDbInMemory = new UnitOfWorkInMemory(myDb);
-    await myDbInMemory.connect();
+    myDB = new MyUnitOfWork();
+    myDB.isInMemory = true;
+    await myDB.connect('xxxx');
 
   });
   self.After({ tags: [tag] }, async (scenario) => {
 
-    await myDbInMemory.close();
+    await myDB.close();
 
   });
 };
@@ -27,7 +24,7 @@ export = function () {
 
   this.Given(/^The database is empty\.$/, async () => {
 
-    await myDbInMemory.reset();
+    await myDB.reset();
 
   });
 
@@ -37,57 +34,57 @@ export = function () {
 
     for (const item of arr) {
 
-      const entity = myDb.reps.personRep.createNewEntity();
+      const entity = myDB.reps.personRep.createNewEntity();
       entity._id = item._id;
       entity.name = item.name;
       entity.age = item.age;
       entity.birthday = item.birthday;
-      myDb.add(entity);
+      myDB.add(entity);
 
     }
 
-    await myDb.saveChange();
+    await myDB.saveChange();
 
   });
 
   this.Given(/^The database has a record\.$/, async (table) => {
 
-    await myDbInMemory.reset();
+    await myDB.reset();
 
     const arr: IPerson[] = table.hashes();
 
     for (const item of arr) {
 
-      const entity = myDb.reps.personRep.createNewEntity();
+      const entity = myDB.reps.personRep.createNewEntity();
       entity._id = item._id;
       entity.name = item.name;
       entity.age = item.age;
       entity.birthday = item.birthday;
-      myDb.add(entity);
+      myDB.add(entity);
 
     }
 
-    await myDb.saveChange();
+    await myDB.saveChange();
 
   });
 
   this.When(/^Execute the method of delete\.$/, async () => {
 
-    const data = await myDb.reps.personRep.getAll()
+    const data = await myDB.reps.personRep.getAll()
       .find({ _id: 'abcdefghijk' })
       .exec();
 
     for (const item of data) {
-      myDb.remove(item);
+      myDB.remove(item);
     }
 
-    await myDb.saveChange();
+    await myDB.saveChange();
 
   });
 
   this.Then(/^The result of database is empty\.$/, async () => {
 
-    const data = await myDb.reps.personRep.getAll()
+    const data = await myDB.reps.personRep.getAll()
       .find({})
       .exec();
 
@@ -99,16 +96,16 @@ export = function () {
 
     const arr: IPerson[] = table.hashes();
 
-    const data = await myDb.reps.personRep.getAll()
+    const data = await myDB.reps.personRep.getAll()
       .find({ _id: 'abcdefghijk' })
       .exec();
 
     data[0].name = arr[0].name;
     data[0].age = arr[0].age;
     data[0].birthday = arr[0].birthday;
-    myDb.update(data[0]);
+    myDB.update(data[0]);
 
-    await myDb.saveChange();
+    await myDB.saveChange();
 
   });
 
@@ -117,7 +114,7 @@ export = function () {
     const arr: IPerson[] = table.hashes();
     const total = arr.length;
 
-    const data = await myDb.reps.personRep.getAll()
+    const data = await myDB.reps.personRep.getAll()
       .find({})
       .exec();
 

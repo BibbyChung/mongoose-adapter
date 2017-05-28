@@ -9,79 +9,77 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const assert = require("assert");
 const myUnitOfWork_1 = require("./myUnitOfWork");
-const unitOfWorkInMemory_1 = require("./../code/unitOfWorkInMemory");
-let myDb;
-let myDbInMemory;
+let myDB;
 const prepareToRun = (self, tag) => {
     self.Before({ tags: [tag], timeout: 3600 * 1000 }, (scenario) => __awaiter(this, void 0, void 0, function* () {
-        myDb = new myUnitOfWork_1.MyUnitOfWork();
-        myDbInMemory = new unitOfWorkInMemory_1.UnitOfWorkInMemory(myDb);
-        yield myDbInMemory.connect();
+        myDB = new myUnitOfWork_1.MyUnitOfWork();
+        myDB.isInMemory = true;
+        yield myDB.connect('xxxx');
     }));
     self.After({ tags: [tag] }, (scenario) => __awaiter(this, void 0, void 0, function* () {
-        yield myDbInMemory.close();
+        yield myDB.close();
     }));
 };
 module.exports = function () {
     prepareToRun(this, '@abcd');
     this.Given(/^The database is empty\.$/, () => __awaiter(this, void 0, void 0, function* () {
-        yield myDbInMemory.reset();
+        yield myDB.reset();
     }));
     this.When(/^Execute the method of create\.$/, (table) => __awaiter(this, void 0, void 0, function* () {
         const arr = table.hashes();
         for (const item of arr) {
-            const entity = myDb.reps.personRep.createNewEntity();
+            const entity = myDB.reps.personRep.createNewEntity();
             entity._id = item._id;
             entity.name = item.name;
             entity.age = item.age;
             entity.birthday = item.birthday;
-            myDb.add(entity);
+            myDB.add(entity);
         }
-        yield myDb.saveChange();
+        yield myDB.saveChange();
     }));
     this.Given(/^The database has a record\.$/, (table) => __awaiter(this, void 0, void 0, function* () {
-        yield myDbInMemory.reset();
+        yield myDB.reset();
         const arr = table.hashes();
         for (const item of arr) {
-            const entity = myDb.reps.personRep.createNewEntity();
+            const entity = myDB.reps.personRep.createNewEntity();
             entity._id = item._id;
             entity.name = item.name;
             entity.age = item.age;
             entity.birthday = item.birthday;
-            myDb.add(entity);
+            myDB.add(entity);
         }
-        yield myDb.saveChange();
+        yield myDB.saveChange();
     }));
     this.When(/^Execute the method of delete\.$/, () => __awaiter(this, void 0, void 0, function* () {
-        const data = yield myDb.reps.personRep.getAll()
+        const data = yield myDB.reps.personRep.getAll()
             .find({ _id: 'abcdefghijk' })
             .exec();
         for (const item of data) {
-            myDb.remove(item);
+            myDB.remove(item);
         }
-        yield myDb.saveChange();
+        yield myDB.saveChange();
     }));
     this.Then(/^The result of database is empty\.$/, () => __awaiter(this, void 0, void 0, function* () {
-        const data = yield myDb.reps.personRep.getAll()
+        const data = yield myDB.reps.personRep.getAll()
             .find({})
             .exec();
         assert.equal(data.length, 0);
     }));
     this.When(/^Execute the method of update\.$/, (table) => __awaiter(this, void 0, void 0, function* () {
         const arr = table.hashes();
-        const data = yield myDb.reps.personRep.getAll()
+        const data = yield myDB.reps.personRep.getAll()
             .find({ _id: 'abcdefghijk' })
             .exec();
         data[0].name = arr[0].name;
         data[0].age = arr[0].age;
         data[0].birthday = arr[0].birthday;
-        myDb.update(data[0]);
-        yield myDb.saveChange();
+        myDB.update(data[0]);
+        yield myDB.saveChange();
     }));
     this.Then(/^The result of database has a record\.$/, (table) => __awaiter(this, void 0, void 0, function* () {
         const arr = table.hashes();
         const total = arr.length;
-        const data = yield myDb.reps.personRep.getAll()
+        const data = yield myDB.reps.personRep.getAll()
             .find({})
             .exec();
         assert.equal(data.length, total);

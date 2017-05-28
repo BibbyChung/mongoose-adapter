@@ -9,8 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
+const mockgoose_1 = require("mockgoose");
+const mockgoose = new mockgoose_1.Mockgoose(mongoose);
 class UnitOfWorkBase {
     constructor() {
+        this.isInMemory = false;
         this.addArr = [];
         this.removeArr = [];
         this.updateArr = [];
@@ -76,34 +79,50 @@ class UnitOfWorkBase {
         return p;
     }
     connect(connectionString) {
-        mongoose.Promise = global.Promise;
-        const p = new Promise((resolve, reject) => {
-            mongoose.connect(connectionString, {
-                server: {
-                    poolSize: 5,
-                },
-            }, (err) => {
-                if (err) {
-                    reject(err);
-                    return;
-                }
-                // console.log("success to connect the db..")
-                resolve();
+        return __awaiter(this, void 0, void 0, function* () {
+            mongoose.Promise = global.Promise;
+            let conString = connectionString;
+            if (this.isInMemory) {
+                conString = 'xxx';
+                yield mockgoose.prepareStorage();
+            }
+            yield new Promise((resolve, reject) => {
+                mongoose.connect(conString, {
+                    server: {
+                        poolSize: 5,
+                    },
+                }, (err) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    // console.log("success to connect the db..")
+                    resolve();
+                });
             });
         });
-        return p;
     }
     close() {
-        const p = new Promise((resolve, reject) => {
-            mongoose.disconnect((err) => {
-                if (err) {
-                    reject(err);
-                    return;
-                }
-                resolve();
+        return __awaiter(this, void 0, void 0, function* () {
+            if (this.isInMemory)
+                yield mockgoose.helper.reset();
+            yield new Promise((resolve, reject) => {
+                mongoose.disconnect((err) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    resolve();
+                });
             });
         });
-        return p;
+    }
+    reset() {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!this.isInMemory)
+                throw new Error('please set the property "isInMemory" to true');
+            yield mockgoose.helper.reset();
+        });
     }
 }
 exports.UnitOfWorkBase = UnitOfWorkBase;
