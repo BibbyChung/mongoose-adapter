@@ -93,6 +93,11 @@ export abstract class UnitOfWorkBase {
   async connect(connectionString: string) {
     (mongoose as any).Promise = global.Promise;
     let conString = connectionString;
+    const options = {
+      useMongoClient: true,
+      poolSize: 5,
+      promiseLibrary: global.Promise,
+    };
 
     if (this.isInMemory) {
       conString = 'xxx';
@@ -100,12 +105,7 @@ export abstract class UnitOfWorkBase {
     }
 
     await new Promise<void>((resolve, reject) => {
-      mongoose.connect(conString, {
-        server: {
-          poolSize: 5,
-        },
-        // tslint:disable-next-line:align
-      }, (err) => {
+      mongoose.connect(conString, options, (err) => {
         if (err) {
           reject(err);
           return;
@@ -120,7 +120,7 @@ export abstract class UnitOfWorkBase {
 
     if (this.isInMemory)
       await mockgoose.helper.reset();
-      
+
     await new Promise<void>((resolve, reject) => {
 
       mongoose.disconnect((err) => {

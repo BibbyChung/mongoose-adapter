@@ -82,16 +82,17 @@ class UnitOfWorkBase {
         return __awaiter(this, void 0, void 0, function* () {
             mongoose.Promise = global.Promise;
             let conString = connectionString;
+            const options = {
+                useMongoClient: true,
+                poolSize: 5,
+                promiseLibrary: global.Promise,
+            };
             if (this.isInMemory) {
                 conString = 'xxx';
                 yield mockgoose.prepareStorage();
             }
             yield new Promise((resolve, reject) => {
-                mongoose.connect(conString, {
-                    server: {
-                        poolSize: 5,
-                    },
-                }, (err) => {
+                mongoose.connect(conString, options, (err) => {
                     if (err) {
                         reject(err);
                         return;

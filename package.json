@@ -1,6 +1,6 @@
 {
   "name": "mongoose-adapter",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Make the mongoose easy to use.",
   "main": "./dist/code/_index.js",
   "types": "./dist/code/_index.d.ts",
@@ -27,15 +27,15 @@
   "homepage": "https://github.com/BibbyChung/mongoose-adapter#readme",
   "dependencies": {
 
-    "mockgoose": "^7.3.1",
-    "mongoose": "^4.10.0"
+    "mockgoose": "^7.3.3",
+    "mongoose": "^4.11.10"
 
   },
   "devDependencies": {
 
-    "@types/node": "^7.0.10",
-    "@types/mongoose": "^4.7.9",
-    "@types/mongoose-promise": "^4.5.5",
+    "@types/node": "^8.0.26",
+    "@types/mongoose": "^4.7.21",
+    "@types/mongoose-promise": "^4.5.7",
 
     "gulp": "3.9.1",
     "gulp-shell": "^0.6.3",
